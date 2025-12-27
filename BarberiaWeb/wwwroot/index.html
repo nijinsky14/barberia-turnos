@@ -1,0 +1,1216 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUCK BARBER - Reservá tu turno online</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✂️</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a1a1a;
+            --accent: #d4af37;
+            --text: #333;
+            --text-light: #666;
+            --bg: #ffffff;
+            --bg-light: #f8f8f8;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        /* Header minimalista */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e8e8e8;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--accent);
+        }
+
+        /* Hero section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem 4rem;
+            text-align: center;
+            position: relative;
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 3rem;
+            font-weight: 400;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Sección de servicios */
+        .services {
+            padding: 6rem 2rem;
+            background: var(--bg-light);
+        }
+
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 4rem;
+            text-align: center;
+            letter-spacing: -1px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s;
+            border: 1px solid #e8e8e8;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .service-card p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* Formulario de reserva */
+        .booking {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .booking-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-group-full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 2rem;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-section p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .copyright {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* Mensajes */
+        .message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .message-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+            
+            .contact-grid {
+                gap: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* Header */
+            header {
+                padding: 0;
+            }
+            
+            nav {
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            /* Hero */
+            .hero {
+                min-height: 100vh;
+                padding: 5rem 1.5rem 3rem;
+                background-attachment: scroll;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+                letter-spacing: -1px;
+                margin-bottom: 1rem;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
+            }
+
+            .cta-button {
+                padding: 0.9rem 2rem;
+                font-size: 1rem;
+                width: auto;
+            }
+
+            /* Secciones generales */
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 2.5rem;
+            }
+
+            .services, .booking, .about, .contact {
+                padding: 4rem 1.5rem;
+            }
+
+            /* Servicios */
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .service-card {
+                padding: 2.5rem 2rem;
+            }
+
+            .service-icon {
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .service-card h3 {
+                font-size: 1.3rem;
+            }
+
+            .service-card p {
+                font-size: 0.95rem;
+            }
+
+            .price {
+                font-size: 1.8rem;
+            }
+
+            /* Formulario */
+            .booking-container {
+                max-width: 100%;
+                padding: 0;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
+
+            .form-group {
+                margin-bottom: 0;
+            }
+
+            .form-group-full {
+                margin-top: 0;
+            }
+
+            label {
+                font-size: 0.95rem;
+                margin-bottom: 0.4rem;
+            }
+
+            input, select, textarea {
+                padding: 0.9rem;
+                font-size: 1rem;
+                border-radius: 8px;
+            }
+
+            textarea {
+                min-height: 80px;
+            }
+
+            .cta-button {
+                width: 100%;
+                padding: 1rem;
+                font-size: 1.05rem;
+            }
+
+            /* Nosotros */
+            .about-container {
+                max-width: 100%;
+            }
+
+            .about-content p {
+                font-size: 1rem;
+                margin-bottom: 1.2rem;
+                line-height: 1.7;
+            }
+
+            .about-content em {
+                font-size: 1.1rem;
+                margin-top: 1.5rem;
+            }
+
+            /* Contacto */
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .contact-form-wrapper,
+            .contact-info {
+                padding: 1.8rem;
+            }
+
+            .contact-form-wrapper h3,
+            .contact-map-wrapper h3 {
+                font-size: 1.4rem;
+                margin-bottom: 1.2rem;
+            }
+
+            .map-container iframe {
+                height: 350px;
+                border-radius: 8px;
+            }
+
+            .contact-info p {
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+
+            /* Footer */
+            .footer-info {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .footer-section h4 {
+                font-size: 1.1rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .footer-section p {
+                font-size: 0.95rem;
+                line-height: 1.7;
+            }
+
+            .copyright {
+                font-size: 0.9rem;
+                padding-top: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* Hero */
+            .hero {
+                min-height: 100vh;
+                padding: 4.5rem 1.2rem 2.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+                letter-spacing: -0.5px;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+                margin-bottom: 1.8rem;
+            }
+
+            .cta-button {
+                padding: 0.85rem 1.8rem;
+                font-size: 0.95rem;
+            }
+
+            /* Secciones */
+            .section-title {
+                font-size: 1.75rem;
+                margin-bottom: 2rem;
+            }
+
+            .services, .booking, .about, .contact {
+                padding: 3.5rem 1.2rem;
+            }
+
+            /* Servicios */
+            .service-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .service-icon {
+                font-size: 2.2rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .service-card h3 {
+                font-size: 1.2rem;
+            }
+
+            .service-card p {
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+
+            .price {
+                font-size: 1.6rem;
+            }
+
+            /* Formulario */
+            .form-grid {
+                gap: 1rem;
+            }
+
+            label {
+                font-size: 0.9rem;
+            }
+
+            input, select, textarea {
+                padding: 0.8rem;
+                font-size: 0.95rem;
+            }
+
+            /* Contacto */
+            .contact-form-wrapper,
+            .contact-info {
+                padding: 1.5rem;
+            }
+
+            .contact-form-wrapper h3,
+            .contact-map-wrapper h3 {
+                font-size: 1.3rem;
+            }
+
+            .map-container iframe {
+                height: 300px;
+            }
+
+            /* Footer */
+            .footer-section h4 {
+                font-size: 1rem;
+            }
+
+            .footer-section p {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 375px) {
+            /* Hero */
+            h1 {
+                font-size: 1.85rem;
+            }
+
+            .subtitle {
+                font-size: 0.95rem;
+            }
+
+            .cta-button {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            /* Secciones */
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .services, .booking, .about, .contact {
+                padding: 3rem 1rem;
+            }
+
+            /* Servicios */
+            .service-card {
+                padding: 1.8rem 1.2rem;
+            }
+
+            .service-icon {
+                font-size: 2rem;
+            }
+
+            .service-card h3 {
+                font-size: 1.15rem;
+            }
+
+            .service-card p {
+                font-size: 0.88rem;
+            }
+
+            .price {
+                font-size: 1.5rem;
+            }
+
+            /* Formulario */
+            input, select, textarea {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+
+            /* Contacto */
+            .contact-form-wrapper,
+            .contact-info {
+                padding: 1.2rem;
+            }
+
+            .map-container iframe {
+                height: 280px;
+            }
+        }
+
+        @media (max-width: 320px) {
+            /* Hero */
+            h1 {
+                font-size: 1.7rem;
+            }
+
+            .subtitle {
+                font-size: 0.9rem;
+            }
+
+            .cta-button {
+                padding: 0.75rem 1.3rem;
+                font-size: 0.85rem;
+            }
+
+            /* Secciones */
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .services, .booking, .about, .contact {
+                padding: 2.5rem 0.8rem;
+            }
+
+            /* Servicios */
+            .service-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .service-icon {
+                font-size: 1.8rem;
+            }
+
+            .price {
+                font-size: 1.4rem;
+            }
+
+            /* Formulario */
+            input, select, textarea {
+                padding: 0.7rem;
+                font-size: 0.88rem;
+            }
+        }
+
+        /* Fix para evitar scroll horizontal */
+        body {
+            overflow-x: hidden;
+        }
+
+        * {
+            max-width: 100%;
+        }
+
+        img, iframe {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Sección Nosotros */
+        .about {
+            padding: 6rem 2rem;
+            background: #fafafa;
+        }
+
+        .about-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .about-content {
+            text-align: left;
+            line-height: 1.8;
+        }
+
+        .about-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            color: var(--text);
+        }
+
+        .about-content strong {
+            color: var(--primary);
+        }
+
+        .about-content em {
+            display: block;
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-top: 2rem;
+            font-style: italic;
+        }
+
+        /* Sección Contacto */
+        .contact {
+            padding: 6rem 2rem;
+            background: var(--bg-light);
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-form-wrapper h3,
+        .contact-map-wrapper h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .contact-form-wrapper {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #e8e8e8;
+        }
+
+        .map-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #e8e8e8;
+        }
+
+        .contact-info p {
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">✂️ LUCK BARBER</div>
+            <div class="nav-links">
+                <a href="#servicios" class="nav-link">Servicios</a>
+                <a href="#nosotros" class="nav-link">Nosotros</a>
+                <a href="#contacto" class="nav-link">Contacto</a>
+                <a href="#reservar" class="nav-link" style="background: var(--primary); color: white; padding: 0.5rem 1.5rem; border-radius: 50px;">Reservar</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Tu estilo,<br>tu momento</h1>
+            <p class="subtitle">Reservá tu turno online en segundos</p>
+            <a href="#reservar" class="cta-button">Reservar ahora</a>
+        </div>
+    </section>
+
+    <!-- Servicios -->
+    <section class="services" id="servicios">
+        <div class="services-container">
+            <h2 class="section-title">Nuestros servicios</h2>
+            <div class="services-grid" id="serviciosGrid">
+                <p style="text-align: center; grid-column: 1/-1; color: #999;">Cargando servicios...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nosotros -->
+    <section class="about" id="nosotros">
+        <div class="about-container">
+            <h2 class="section-title">Nosotros</h2>
+            <div class="about-content">
+                <p>En <strong>LUCK BARBER</strong>, creemos que cada corte es una obra de arte. Desde 2018, nos dedicamos a ofrecer más que un servicio de barbería: creamos experiencias únicas donde el estilo y la personalidad de cada cliente se encuentran.</p>
+                
+                <p>Nuestro equipo de barberos profesionales está capacitado en las últimas tendencias y técnicas clásicas, garantizando resultados impecables en cada visita. Utilizamos productos premium y trabajamos con atención al detalle para que salgas luciendo exactamente como lo imaginás.</p>
+                
+                <p>Ubicados en el corazón de Rosario, nos hemos convertido en el punto de encuentro para quienes buscan calidad, confianza y un ambiente relajado. Ya sea un corte clásico, un fade moderno o un arreglo de barba profesional, en LUCK BARBER encontrás tu mejor versión.</p>
+                
+                <p><em>Tu estilo, nuestra pasión.</em></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formulario de Reserva -->
+    <section class="booking" id="reservar">
+        <div class="booking-container">
+            <h2 class="section-title">Reservá tu turno</h2>
+            
+            <div id="mensaje"></div>
+
+            <form id="turnoForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="nombre">Nombre completo</label>
+                        <input type="text" id="nombre" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefono">Teléfono (WhatsApp)</label>
+                        <input type="tel" id="telefono" placeholder="3416123456" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email (opcional)</label>
+                        <input type="email" id="email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="servicio">Servicio</label>
+                        <select id="servicio" required>
+                            <option value="">Cargando servicios...</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fecha">Fecha</label>
+                        <input type="date" id="fecha" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hora">Horario</label>
+                        <select id="hora" required>
+                            <option value="">Primero seleccioná una fecha</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group form-group-full">
+                    <label for="comentarios">Comentarios (opcional)</label>
+                    <textarea id="comentarios" rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="cta-button" id="btnSubmit" style="width: 100%; margin-top: 1.5rem;">
+                    Confirmar reserva
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <section class="contact" id="contacto">
+        <div class="contact-container">
+            <h2 class="section-title">Contacto</h2>
+            
+            <div class="contact-grid">
+                <div class="contact-form-wrapper">
+                    <h3>Envianos un mensaje</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="contactNombre">Nombre</label>
+                            <input type="text" id="contactNombre" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactEmail">Email</label>
+                            <input type="email" id="contactEmail" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactMensaje">Mensaje</label>
+                            <textarea id="contactMensaje" rows="5" required></textarea>
+                        </div>
+
+                        <button type="submit" class="cta-button" style="width: 100%;">
+                            Enviar mensaje
+                        </button>
+                    </form>
+                </div>
+
+                <div class="contact-map-wrapper">
+                    <h3>Nuestra ubicación</h3>
+                    <div class="map-container">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3348.2!2d-60.6393!3d-32.9468!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95b7ab0f56f5e5e5%3A0x1234567890abcdef!2sAv.%20Pellegrini%2C%20Rosario%2C%20Santa%20Fe!5e0!3m2!1ses!2sar!4v1234567890123!5m2!1ses!2sar" 
+                            width="100%" 
+                            height="400" 
+                            style="border:0; border-radius: 12px;" 
+                            allowfullscreen="" 
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="contact-info">
+                        <p><strong>📍 Dirección:</strong> Av. Pellegrini 1234, Rosario, Santa Fe</p>
+                        <p><strong>📞 Teléfono:</strong> +54 341 690-1109</p>
+                        <p><strong>✉️ Email:</strong> luckbarber@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-info">
+                <div class="footer-section">
+                    <h4>Ubicación</h4>
+                    <p>Av. Pellegrini 1234<br>Rosario, Santa Fe</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <p>+54 341 690-1109<br>luckbarber@gmail.com</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Horarios</h4>
+                    <p>Lunes a Viernes: 9:00 - 20:00<br>Sábados: 9:00 - 18:00</p>
+                </div>
+            </div>
+            <div class="copyright">
+                © 2025 LUCK BARBER - Todos los derechos reservados
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const API_URL = window.location.origin;
+
+        function mostrarMensaje(texto, tipo) {
+            const mensajeDiv = document.getElementById('mensaje');
+            mensajeDiv.className = `message message-${tipo}`;
+            mensajeDiv.textContent = texto;
+            mensajeDiv.style.display = 'block';
+
+            setTimeout(() => {
+                mensajeDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // Cargar servicios
+        async function cargarServicios() {
+            try {
+                const response = await fetch(`${API_URL}/api/servicios`);
+                const servicios = await response.json();
+
+                // Actualizar select
+                const select = document.getElementById('servicio');
+                select.innerHTML = '<option value="">Seleccioná un servicio</option>';
+                servicios.forEach(s => {
+                    const option = document.createElement('option');
+                    option.value = s.id;
+                    option.textContent = `${s.nombre} - $${s.precio.toLocaleString()}`;
+                    select.appendChild(option);
+                });
+
+                // Actualizar grid
+                const grid = document.getElementById('serviciosGrid');
+                
+                // Mapeo de íconos por servicio
+                const iconos = {
+                    'Corte': '✂️',
+                    'Barba': '🧔',
+                    'Corte + Barba': '💈',
+                    'Afeitado': '🪒',
+                    'default': '💇'
+                };
+
+                grid.innerHTML = servicios.map(s => {
+                    const icono = iconos[s.nombre] || iconos['default'];
+                    return `
+                        <div class="service-card">
+                            <span class="service-icon">${icono}</span>
+                            <h3>${s.nombre}</h3>
+                            <p>${s.descripcion || ''}</p>
+                            <div class="price">$${s.precio.toLocaleString()}</div>
+                        </div>
+                    `;
+                }).join('');
+            } catch (error) {
+                console.error('Error cargando servicios:', error);
+            }
+        }
+
+        // Fecha mínima: hoy
+        const fechaInput = document.getElementById('fecha');
+        const today = new Date().toISOString().split('T')[0];
+        fechaInput.min = today;
+
+        // Cargar horarios disponibles
+        fechaInput.addEventListener('change', async function() {
+            const fecha = this.value;
+            const horaSelect = document.getElementById('hora');
+
+            if (!fecha) return;
+
+            try {
+                horaSelect.innerHTML = '<option value="">Cargando horarios...</option>';
+
+                const response = await fetch(`${API_URL}/api/turnos/disponibilidad?fecha=${fecha}`);
+                const data = await response.json();
+
+                if (data.horariosDisponibles && data.horariosDisponibles.length > 0) {
+                    horaSelect.innerHTML = '<option value="">Seleccioná un horario</option>';
+                    data.horariosDisponibles.forEach(hora => {
+                        const option = document.createElement('option');
+                        option.value = hora;
+                        option.textContent = hora;
+                        horaSelect.appendChild(option);
+                    });
+                } else {
+                    horaSelect.innerHTML = '<option value="">No hay horarios disponibles</option>';
+                    mostrarMensaje('No hay horarios disponibles para esta fecha', 'error');
+                }
+            } catch (error) {
+                console.error('Error cargando horarios:', error);
+                horaSelect.innerHTML = '<option value="">Error al cargar horarios</option>';
+            }
+        });
+
+        // Submit formulario
+        document.getElementById('turnoForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const btnSubmit = document.getElementById('btnSubmit');
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<span class="loading"></span> Procesando...';
+
+            const datos = {
+                nombre: document.getElementById('nombre').value,
+                telefono: document.getElementById('telefono').value,
+                email: document.getElementById('email').value || null,
+                servicioId: parseInt(document.getElementById('servicio').value),
+                fechaTurno: document.getElementById('fecha').value,
+                horaTurno: document.getElementById('hora').value,
+                comentarios: document.getElementById('comentarios').value || null
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/api/turnos`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(datos)
+                });
+
+                if (response.ok) {
+                    const turno = await response.json();
+                    mostrarMensaje('✓ Turno reservado exitosamente', 'success');
+
+                    // WhatsApp
+                    const fechaObj = new Date(datos.fechaTurno + 'T00:00:00');
+                    const fechaFormateada = fechaObj.toLocaleDateString('es-AR', {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+
+                    const mensaje = `Hola LUCK BARBER!\n\n` +
+                        `Acabo de reservar un turno:\n\n` +
+                        `Nombre: ${datos.nombre}\n` +
+                        `Servicio: ${turno.nombreServicio}\n` +
+                        `Fecha: ${fechaFormateada}\n` +
+                        `Hora: ${datos.horaTurno}\n` +
+                        `Precio: $${turno.precioServicio.toLocaleString()}\n\n` +
+                        `Gracias!`;
+
+                    const numeroWhatsApp = '5493416901109';
+                    const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+
+                    setTimeout(() => {
+                        window.open(urlWhatsApp, '_blank');
+                    }, 1000);
+
+                    // Reset
+                    this.reset();
+                    document.getElementById('hora').innerHTML = '<option value="">Primero seleccioná una fecha</option>';
+                } else {
+                    const error = await response.json();
+                    mostrarMensaje('✗ ' + (error.mensaje || 'Error al reservar el turno'), 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                mostrarMensaje('✗ Error al conectar con el servidor', 'error');
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.textContent = 'Confirmar reserva';
+            }
+        });
+
+        // Cargar servicios al inicio
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', cargarServicios);
+        } else {
+            cargarServicios();
+        }
+
+        // Formulario de contacto
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nombre = document.getElementById('contactNombre').value;
+            const email = document.getElementById('contactEmail').value;
+            const mensaje = document.getElementById('contactMensaje').value;
+
+            // Crear mensaje de WhatsApp
+            const mensajeWhatsApp = `Hola LUCK BARBER!\n\n` +
+                `Me contacto desde el formulario web:\n\n` +
+                `Nombre: ${nombre}\n` +
+                `Email: ${email}\n\n` +
+                `Mensaje:\n${mensaje}`;
+
+            const numeroWhatsApp = '5493416901109';
+            const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajeWhatsApp)}`;
+
+            // Abrir WhatsApp
+            window.open(urlWhatsApp, '_blank');
+
+            // Limpiar formulario
+            this.reset();
+            
+            // Mostrar confirmación
+            alert('¡Gracias por tu mensaje! Te redirigimos a WhatsApp para completar el contacto.');
+        });
+    </script>
+</body>
+</html>

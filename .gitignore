@@ -1,0 +1,76 @@
+## Ignorar archivos de Visual Studio y .NET
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio cache/options
+.vs/
+.vscode/
+.vsidx/
+
+# MSTest test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# NuGet Packages
+*.nupkg
+*.snupkg
+**/packages/*
+!**/packages/build/
+
+# SQL Server files
+*.mdf
+*.ldf
+*.ndf
+
+# Entity Framework Migrations (opcional - descomentar si no quieres subirlas)
+# **/Migrations/
+
+# User secrets y configuración local
+appsettings.Development.json
+appsettings.*.json
+!appsettings.json
+
+# Connection strings (IMPORTANTE: no subir credenciales)
+connectionstrings.json
+
+# wwwroot compiled files (si usas bundling)
+wwwroot/dist/
+wwwroot/lib/
+
+# Node modules (si usas npm)
+node_modules/
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# Backup files
+*.bak
+
+# OS generated files
+.DS_Store
+Thumbs.db
