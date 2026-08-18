@@ -17,14 +17,23 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #1a1a1a;
+            --accent: #d4af37;
+            --text: #333;
+            --text-light: #666;
+            --bg: #ffffff;
+            --bg-light: #f8f8f8;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f5f5f5;
-            color: #333;
+            color: var(--text);
         }
 
         header {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, #2d2d2d 100%);
             color: white;
             padding: 1.5rem 2rem;
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
@@ -41,7 +50,7 @@
         .logo {
             font-size: 1.8rem;
             font-weight: bold;
-            color: #d4af37;
+            color: var(--accent);
         }
 
         .nav-buttons {
@@ -61,7 +70,7 @@
         }
 
         .btn-primary {
-            background: #d4af37;
+            background: var(--accent);
             color: white;
         }
 
@@ -98,12 +107,12 @@
         }
 
         .fc-toolbar-title {
-            color: #1a1a1a;
+            color: var(--primary);
             font-size: 1.5rem !important;
         }
 
         .fc-button {
-            background: #d4af37 !important;
+            background: var(--accent) !important;
             border: none !important;
             text-transform: capitalize !important;
         }
@@ -156,14 +165,14 @@
         }
 
         .modal-header h3 {
-            color: #1a1a1a;
+            color: var(--primary);
             margin: 0;
         }
 
         .close {
             font-size: 2rem;
             cursor: pointer;
-            color: #666;
+            color: var(--text-light);
             background: none;
             border: none;
         }
@@ -181,12 +190,12 @@
         .detail-label {
             font-weight: 600;
             width: 120px;
-            color: #666;
+            color: var(--text-light);
         }
 
         .detail-value {
             flex: 1;
-            color: #1a1a1a;
+            color: var(--primary);
         }
 
         .badge {
@@ -247,7 +256,7 @@
             display: block;
             margin-bottom: 0.3rem;
             font-weight: 600;
-            color: #333;
+            color: var(--text);
             font-size: 0.9rem;
         }
 
@@ -267,7 +276,7 @@
         .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: #d4af37;
+            border-color: var(--accent);
         }
 
         .form-group textarea {
@@ -329,7 +338,7 @@
         body.dark-mode .form-group input:focus,
         body.dark-mode .form-group select:focus,
         body.dark-mode .form-group textarea:focus {
-            border-color: #d4af37;
+            border-color: var(--accent);
         }
 
         body.dark-mode .form-group label {
@@ -421,7 +430,7 @@
 <body>
     <header>
         <div class="header-content">
-            <div class="logo">✂️ LUCK BARBER - Calendario</div>
+            <div class="logo" id="navLogo">✂️ LUCK BARBER - Calendario</div>
             <div class="nav-buttons">
                 <button class="btn btn-info" onclick="toggleDarkMode()">
                     <span id="darkModeIcon">🌙</span> <span id="darkModeText">Modo Oscuro</span>
@@ -531,9 +540,36 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/locales/es.global.min.js'></script>
 
+    <script src="/js/negocio-config.js"></script>
     <script>
         const API_URL = window.location.origin;
         let calendar;
+
+        // Cargar configuración del negocio (título, logo, colores del tema)
+        async function inicializarNegocio() {
+            try {
+                const negocio = await cargarConfigNegocio();
+                document.title = `Calendario - ${negocio.nombre}`;
+
+                const navLogo = document.getElementById('navLogo');
+                if (navLogo) {
+                    if (negocio.logoUrl) {
+                        navLogo.innerHTML = '';
+                        const img = document.createElement('img');
+                        img.src = negocio.logoUrl;
+                        img.alt = negocio.nombre;
+                        img.style.height = '1.8rem';
+                        img.style.verticalAlign = 'middle';
+                        navLogo.appendChild(img);
+                        navLogo.append(' - Calendario');
+                    } else {
+                        navLogo.textContent = `✂️ ${negocio.nombre} - Calendario`;
+                    }
+                }
+            } catch (error) {
+                console.error('Error cargando configuración del negocio:', error);
+            }
+        }
 
         // Verificar autenticación
         async function verificarAutenticacion() {
@@ -835,6 +871,8 @@
 
         // Inicializar calendario
         document.addEventListener('DOMContentLoaded', async function() {
+            inicializarNegocio();
+
             const autenticado = await verificarAutenticacion();
             if (!autenticado) return;
 

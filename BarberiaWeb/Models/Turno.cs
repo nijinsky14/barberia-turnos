@@ -8,6 +8,11 @@ namespace BarberiaWeb.Models
         [Key]
         public int Id { get; set; }
 
+        [Required]
+        public int NegocioId { get; set; }
+        [ForeignKey("NegocioId")]
+        public virtual Negocio Negocio { get; set; } = null!;
+
         // Relaciones
         [Required]
         public int ClienteId { get; set; }

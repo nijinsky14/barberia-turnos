@@ -12,9 +12,18 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #1a1a1a;
+            --accent: #d4af37;
+            --text: #333;
+            --text-light: #666;
+            --bg: #ffffff;
+            --bg-light: #f8f8f8;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, #2d2d2d 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -49,13 +58,13 @@
         }
 
         .logo h1 {
-            color: #d4af37;
+            color: var(--accent);
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
         }
 
         .logo p {
-            color: #666;
+            color: var(--text-light);
             font-size: 0.9rem;
         }
 
@@ -67,7 +76,7 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 600;
-            color: #333;
+            color: var(--text);
         }
 
         input {
@@ -81,14 +90,14 @@
 
         input:focus {
             outline: none;
-            border-color: #d4af37;
+            border-color: var(--accent);
             box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
         }
 
         .btn-login {
             width: 100%;
             padding: 1rem;
-            background: linear-gradient(135deg, #d4af37 0%, #c4991f 100%);
+            background: linear-gradient(135deg, var(--accent) 0%, #c4991f 100%);
             color: white;
             border: none;
             border-radius: 10px;
@@ -171,7 +180,7 @@
             border: none;
             cursor: pointer;
             font-size: 1.2rem;
-            color: #666;
+            color: var(--text-light);
         }
 
         @media (max-width: 480px) {
@@ -188,7 +197,7 @@
 <body>
     <div class="login-container">
         <div class="logo">
-            <h1>✂️ LUCK BARBER</h1>
+            <h1 id="logoHeading">✂️ LUCK BARBER</h1>
             <p>Panel de Administración</p>
         </div>
 
@@ -214,10 +223,11 @@
         </form>
 
         <div class="footer">
-            <p>© 2025 LUCK BARBER - Sistema Seguro</p>
+            <p id="footerText">© 2025 LUCK BARBER - Sistema Seguro</p>
         </div>
     </div>
 
+    <script src="/js/negocio-config.js"></script>
     <script>
         const API_URL = window.location.origin;
 
@@ -295,8 +305,27 @@
             }
         });
 
+        // Cargar configuración del negocio (nombre para título, encabezado y footer)
+        async function inicializarNegocio() {
+            try {
+                const negocio = await cargarConfigNegocio();
+                document.title = `Login - ${negocio.nombre} Admin`;
+
+                const logoHeading = document.getElementById('logoHeading');
+                if (logoHeading) logoHeading.textContent = `✂️ ${negocio.nombre}`;
+
+                const footerText = document.getElementById('footerText');
+                if (footerText) {
+                    footerText.textContent = footerText.textContent.replace('LUCK BARBER', negocio.nombre);
+                }
+            } catch (error) {
+                console.error('Error cargando configuración del negocio:', error);
+            }
+        }
+
         // Verificar sesión al cargar la página
         verificarSesion();
+        inicializarNegocio();
 
         // Enter para enviar formulario
         document.getElementById('contrasena').addEventListener('keypress', function(e) {

@@ -46,7 +46,7 @@ bld/
 # Entity Framework Migrations (opcional - descomentar si no quieres subirlas)
 # **/Migrations/
 
-# User secrets y configuraci�n local
+# User secrets y configuraci�n local
 appsettings.Development.json
 appsettings.*.json
 !appsettings.json
@@ -57,6 +57,10 @@ connectionstrings.json
 # wwwroot compiled files (si usas bundling)
 wwwroot/dist/
 wwwroot/lib/
+
+# Fotos subidas por el panel de personalización (datos de runtime, no código)
+BarberiaWeb/wwwroot/uploads/*
+!BarberiaWeb/wwwroot/uploads/.gitkeep
 
 # Node modules (si usas npm)
 node_modules/

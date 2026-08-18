@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BarberiaWeb.Models
 {
@@ -6,6 +7,11 @@ namespace BarberiaWeb.Models
     {
         [Key]
         public int Id { get; set; }
+
+        [Required]
+        public int NegocioId { get; set; }
+        [ForeignKey("NegocioId")]
+        public virtual Negocio Negocio { get; set; } = null!;
 
         [Required]
         [StringLength(100)]

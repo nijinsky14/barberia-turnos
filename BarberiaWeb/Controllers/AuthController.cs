@@ -1,5 +1,13 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using BarberiaWeb.Data;
 using BarberiaWeb.Models;
+using BarberiaWeb.Services;
 
 namespace BarberiaWeb.Controllers
 {
@@ -7,63 +15,77 @@ namespace BarberiaWeb.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
+        private readonly BarberiaDbContext _context;
+        private readonly INegocioContextService _negocioContext;
+        private readonly IPasswordHasher<Usuario> _passwordHasher;
 
-        public AuthController(IConfiguration configuration)
+        public AuthController(BarberiaDbContext context, INegocioContextService negocioContext, IPasswordHasher<Usuario> passwordHasher)
         {
-            _configuration = configuration;
+            _context = context;
+            _negocioContext = negocioContext;
+            _passwordHasher = passwordHasher;
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginRequest request)
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            // Obtener credenciales desde appsettings.json
-            var adminUser = _configuration["Admin:Usuario"];
-            var adminPass = _configuration["Admin:Contrasena"];
+            var negocioId = _negocioContext.NegocioActualId;
+            var usuario = await _context.Usuarios
+                .FirstOrDefaultAsync(u => u.NegocioId == negocioId && u.NombreUsuario == request.Usuario);
 
-            if (request.Usuario == adminUser && request.Contrasena == adminPass)
+            if (usuario == null)
             {
-                // Crear cookie de sesión
-                Response.Cookies.Append("admin_auth", "authenticated", new CookieOptions
-                {
-                    HttpOnly = true,
-                    Secure = false, // Cambiar a true en producción con HTTPS
-                    SameSite = SameSiteMode.Strict,
-                    Expires = DateTimeOffset.UtcNow.AddHours(8) // Sesión de 8 horas
-                });
-
-                return Ok(new LoginResponse
-                {
-                    Exitoso = true,
-                    Mensaje = "Login exitoso"
-                });
+                return Unauthorized(new LoginResponse { Exitoso = false, Mensaje = "Usuario o contraseÃ±a incorrectos" });
             }
 
-            return Unauthorized(new LoginResponse
+            var resultado = _passwordHasher.VerifyHashedPassword(usuario, usuario.PasswordHash, request.Contrasena);
+            if (resultado == PasswordVerificationResult.Failed)
             {
-                Exitoso = false,
-                Mensaje = "Usuario o contraseña incorrectos"
+                return Unauthorized(new LoginResponse { Exitoso = false, Mensaje = "Usuario o contraseÃ±a incorrectos" });
+            }
+
+            if (resultado == PasswordVerificationResult.SuccessRehashNeeded)
+            {
+                usuario.PasswordHash = _passwordHasher.HashPassword(usuario, request.Contrasena);
+            }
+
+            usuario.UltimoLogin = DateTime.Now;
+            await _context.SaveChangesAsync();
+
+            var claims = new List<Claim>
+            {
+                new(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
+                new(ClaimTypes.Name, usuario.NombreUsuario),
+                new("NegocioId", usuario.NegocioId.ToString())
+            };
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(identity);
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties
+            {
+                IsPersistent = true,
+                ExpiresUtc = DateTimeOffset.UtcNow.AddHours(8)
+            });
+
+            return Ok(new LoginResponse
+            {
+                Exitoso = true,
+                Mensaje = "Login exitoso"
             });
         }
 
         [HttpPost("logout")]
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            Response.Cookies.Delete("admin_auth");
-            return Ok(new { mensaje = "Sesión cerrada exitosamente" });
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Ok(new { mensaje = "SesiÃ³n cerrada exitosamente" });
         }
 
+        [Authorize]
         [HttpGet("verificar")]
         public IActionResult VerificarSesion()
         {
-            var authCookie = Request.Cookies["admin_auth"];
-
-            if (authCookie == "authenticated")
-            {
-                return Ok(new { autenticado = true });
-            }
-
-            return Unauthorized(new { autenticado = false });
+            return Ok(new { autenticado = true });
         }
     }
 }

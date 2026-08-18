@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using BarberiaWeb.DTOs;
 using BarberiaWeb.Services;
 
@@ -63,6 +64,7 @@ namespace BarberiaWeb.Controllers
             return CreatedAtAction(nameof(CrearTurno), new { id = turno.Id }, turno);
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<List<TurnoDto>>> ObtenerTurnos(
             [FromQuery] DateTime? desde = null, 
@@ -73,12 +75,13 @@ namespace BarberiaWeb.Controllers
         }
 
         [HttpGet("disponibilidad")]
-        public async Task<ActionResult<DisponibilidadDto>> ObtenerDisponibilidad([FromQuery] DateTime fecha)
+        public async Task<ActionResult<DisponibilidadDto>> ObtenerDisponibilidad([FromQuery] DateTime fecha, [FromQuery] int servicioId)
         {
-            var disponibilidad = await _turnoService.ObtenerDisponibilidad(fecha);
+            var disponibilidad = await _turnoService.ObtenerDisponibilidad(fecha, servicioId);
             return Ok(disponibilidad);
         }
 
+        [Authorize]
         [HttpGet("fecha/{fecha}")]
         public async Task<ActionResult<List<TurnoDto>>> ObtenerTurnosPorFecha(DateTime fecha)
         {
@@ -86,6 +89,7 @@ namespace BarberiaWeb.Controllers
             return Ok(turnos);
         }
 
+        [Authorize]
         [HttpGet("estadisticas")]
         public async Task<ActionResult<EstadisticasTurnosDto>> ObtenerEstadisticas([FromQuery] DateTime? fecha = null)
         {
@@ -93,6 +97,7 @@ namespace BarberiaWeb.Controllers
             return Ok(estadisticas);
         }
 
+        [Authorize]
         [HttpPut("{id}/confirmar")]
         public async Task<ActionResult> ConfirmarTurno(int id)
         {
@@ -104,6 +109,7 @@ namespace BarberiaWeb.Controllers
             return Ok(new { mensaje = "Turno confirmado exitosamente" });
         }
 
+        [Authorize]
         [HttpPut("{id}/completar")]
         public async Task<ActionResult> CompletarTurno(int id)
         {
@@ -115,6 +121,7 @@ namespace BarberiaWeb.Controllers
             return Ok(new { mensaje = "Turno completado exitosamente" });
         }
 
+        [Authorize]
         [HttpPut("{id}/cancelar")]
         public async Task<ActionResult> CancelarTurno(int id, [FromBody] CancelarTurnoDto dto)
         {
@@ -126,6 +133,7 @@ namespace BarberiaWeb.Controllers
             return Ok(new { mensaje = "Turno cancelado exitosamente" });
         }
 
+        [Authorize]
         [HttpGet("calendario")]
         public async Task<ActionResult> ObtenerEventosCalendario(
             [FromQuery] DateTime? desde = null,

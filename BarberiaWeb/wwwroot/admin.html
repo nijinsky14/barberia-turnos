@@ -12,10 +12,19 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #1a1a1a;
+            --accent: #d4af37;
+            --text: #333;
+            --text-light: #666;
+            --bg: #ffffff;
+            --bg-light: #f8f8f8;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f5f5f5;
-            color: #333;
+            color: var(--text);
         }
 
         body.dark-mode {
@@ -24,7 +33,7 @@
         }
 
         header {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, #2d2d2d 100%);
             color: white;
             padding: 1.5rem 2rem;
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
@@ -45,7 +54,7 @@
         .logo {
             font-size: 1.8rem;
             font-weight: bold;
-            color: #d4af37;
+            color: var(--accent);
         }
 
         .admin-title {
@@ -71,7 +80,7 @@
             padding: 1.5rem;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-left: 4px solid #d4af37;
+            border-left: 4px solid var(--accent);
         }
 
         body.dark-mode .stat-card,
@@ -83,7 +92,7 @@
 
         .stat-card h3 {
             font-size: 0.9rem;
-            color: #666;
+            color: var(--text-light);
             margin-bottom: 0.5rem;
             text-transform: uppercase;
         }
@@ -96,7 +105,7 @@
         .stat-value {
             font-size: 2rem;
             font-weight: bold;
-            color: #1a1a1a;
+            color: var(--primary);
         }
 
         body.dark-mode .stat-value {
@@ -135,7 +144,7 @@
         .filter-group label {
             margin-bottom: 0.5rem;
             font-weight: 600;
-            color: #333;
+            color: var(--text);
         }
 
         body.dark-mode .filter-group label {
@@ -159,7 +168,7 @@
 
         body.dark-mode .filter-group input:focus,
         body.dark-mode .filter-group select:focus {
-            border-color: #d4af37;
+            border-color: var(--accent);
         }
 
         .btn {
@@ -172,7 +181,7 @@
         }
 
         .btn-primary {
-            background: #d4af37;
+            background: var(--accent);
             color: white;
         }
 
@@ -356,7 +365,7 @@
         }
 
         .modal-header h3 {
-            color: #1a1a1a;
+            color: var(--primary);
         }
 
         body.dark-mode .modal-header h3 {
@@ -366,7 +375,7 @@
         .close {
             font-size: 2rem;
             cursor: pointer;
-            color: #666;
+            color: var(--text-light);
         }
 
         .close:hover {
@@ -405,7 +414,7 @@
 
         .spinner {
             border: 4px solid #f3f3f3;
-            border-top: 4px solid #d4af37;
+            border-top: 4px solid var(--accent);
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -472,7 +481,7 @@
 
         body.dark-mode .filter-group input:focus,
         body.dark-mode .filter-group select:focus {
-            border-color: #d4af37;
+            border-color: var(--accent);
         }
 
         body.dark-mode .modal {
@@ -498,6 +507,27 @@
             color: #b0b0b0;
         }
 
+        body.dark-mode .servicio-card {
+            background: #1a1a1a;
+            border: 2px solid #3a3a3a;
+        }
+
+        body.dark-mode .servicio-card-desc {
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .servicios-header h2 {
+            color: #f0f0f0;
+        }
+
+        body.dark-mode .sugerencia-chip {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .sugerencia-chip:hover {
+            color: #1a1a1a;
+        }
+
         @media (max-width: 768px) {
             .dashboard {
                 grid-template-columns: 1fr;
@@ -519,12 +549,467 @@
                 flex-direction: column;
             }
         }
+
+        /* TABS DE NAVEGACIÓN PRINCIPAL */
+        .tabs-nav {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px 8px 0 0;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            background: #e9ecef;
+            color: #495057;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        body.dark-mode .tab-btn {
+            background: #2d2d2d;
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .tab-btn.active {
+            background: var(--accent);
+            color: #1a1a1a;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* PERSONALIZACIÓN */
+        .personalizacion-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        body.dark-mode .personalizacion-section {
+            background: #2d2d2d;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+
+        .personalizacion-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.2rem;
+            font-size: 1.3rem;
+        }
+
+        body.dark-mode .personalizacion-section h2 {
+            color: #f0f0f0;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .form-grid .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="tel"],
+        .form-group input[type="email"] {
+            width: 100%;
+            padding: 0.7rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        body.dark-mode .form-group input[type="text"],
+        body.dark-mode .form-group input[type="tel"],
+        body.dark-mode .form-group input[type="email"] {
+            background: #1a1a1a;
+            border: 2px solid #3a3a3a;
+            color: #e0e0e0;
+        }
+
+        .colores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .color-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .color-field label {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .color-field input[type="color"] {
+            width: 100%;
+            height: 45px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 2px;
+            cursor: pointer;
+        }
+
+        body.dark-mode .color-field input[type="color"] {
+            border: 2px solid #3a3a3a;
+        }
+
+        .presets-row {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .preset-btn {
+            padding: 0.6rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            background: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        body.dark-mode .preset-btn {
+            background: #1a1a1a;
+            border: 2px solid #3a3a3a;
+            color: #e0e0e0;
+        }
+
+        .preset-swatch {
+            display: inline-flex;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            border: 1px solid rgba(0,0,0,0.2);
+        }
+
+        .upload-row {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .upload-box {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            align-items: flex-start;
+        }
+
+        .upload-hint {
+            color: var(--text-light);
+            font-size: 0.8rem;
+            line-height: 1.3;
+            margin: -0.3rem 0 0;
+        }
+
+        .upload-box .upload-hint {
+            max-width: 200px;
+        }
+
+        .upload-preview {
+            width: 180px;
+            height: 120px;
+            border-radius: 8px;
+            border: 2px dashed #ccc;
+            background: #f8f8f8 center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        body.dark-mode .upload-preview {
+            background-color: #1a1a1a;
+            border: 2px dashed #444;
+            color: #777;
+        }
+
+        .upload-error {
+            color: #dc3545;
+            font-size: 0.85rem;
+            max-width: 220px;
+        }
+
+        .galeria-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .galeria-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #eee;
+            cursor: grab;
+            aspect-ratio: 1 / 1;
+        }
+
+        body.dark-mode .galeria-item {
+            border: 2px solid #3a3a3a;
+        }
+
+        .galeria-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .galeria-item .btn-eliminar-foto {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: rgba(220,53,69,0.9);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 0.3rem 0.5rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+
+        .galeria-item.sortable-ghost {
+            opacity: 0.4;
+        }
+
+        .horarios-tabla {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .horarios-tabla td {
+            padding: 0.6rem 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        body.dark-mode .horarios-tabla td {
+            border-bottom: 1px solid #3a3a3a;
+        }
+
+        .horarios-tabla input[type="time"] {
+            padding: 0.5rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+
+        body.dark-mode .horarios-tabla input[type="time"] {
+            background: #1a1a1a;
+            border: 2px solid #3a3a3a;
+            color: #e0e0e0;
+        }
+
+        .horarios-tabla input[type="time"]:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .dia-label {
+            font-weight: 600;
+            min-width: 100px;
+            display: inline-block;
+        }
+
+        .secciones-orden-grid {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .seccion-card {
+            background: var(--bg-light, #f8f8f8);
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            cursor: grab;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 150px;
+        }
+
+        body.dark-mode .seccion-card {
+            background: #1a1a1a;
+            border: 2px solid #3a3a3a;
+            color: #e0e0e0;
+        }
+
+        .seccion-card.sortable-ghost {
+            opacity: 0.4;
+        }
+
+        .guardar-bar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .guardar-msg {
+            font-weight: 600;
+        }
+
+        .guardar-msg.ok {
+            color: #28a745;
+        }
+
+        .guardar-msg.error {
+            color: #dc3545;
+        }
+
+        /* SERVICIOS (ABM) */
+        .servicios-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .servicios-header h2 {
+            color: var(--primary);
+            font-size: 1.3rem;
+        }
+
+        body.dark-mode .servicios-header h2 {
+            color: #f0f0f0;
+        }
+
+        .sugerencias-row {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.2rem;
+        }
+
+        .sugerencia-chip {
+            padding: 0.5rem 0.9rem;
+            border: 2px solid var(--accent);
+            border-radius: 20px;
+            background: transparent;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .sugerencia-chip:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        body.dark-mode .sugerencia-chip {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .sugerencia-chip:hover {
+            color: #1a1a1a;
+        }
+
+        .servicios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1rem;
+        }
+
+        .servicio-card {
+            background: var(--bg-light, #f8f8f8);
+            border: 2px solid #eee;
+            border-radius: 10px;
+            padding: 1.1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        body.dark-mode .servicio-card {
+            background: #1a1a1a;
+            border: 2px solid #3a3a3a;
+        }
+
+        .servicio-card.inactivo {
+            opacity: 0.55;
+        }
+
+        .servicio-card-titulo {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .servicio-card-titulo strong {
+            font-size: 1.05rem;
+        }
+
+        .servicio-card-desc {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        body.dark-mode .servicio-card-desc {
+            color: #b0b0b0;
+        }
+
+        .servicio-card-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .badge-activo {
+            background: #28a745;
+            color: white;
+        }
+
+        .badge-inactivo {
+            background: #6c757d;
+            color: white;
+        }
+
+        .servicio-card-acciones {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.4rem;
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="header-content">
-            <div class="logo">✂️ LUCK BARBER</div>
+            <div class="logo" id="navLogo">✂️ LUCK BARBER</div>
             <div class="admin-title">Panel de Administración</div>
             <div style="display: flex; gap: 1rem; align-items: center;">
                 <button class="btn btn-info" onclick="toggleDarkMode()" style="padding: 0.5rem 1rem;">
@@ -538,6 +1023,15 @@
     </header>
 
     <div class="container">
+        <!-- Tabs de navegación -->
+        <div class="tabs-nav">
+            <button class="tab-btn active" id="tabBtnDashboard" onclick="cambiarTab('dashboard')">📊 Dashboard</button>
+            <button class="tab-btn" id="tabBtnPersonalizacion" onclick="cambiarTab('personalizacion')">🎨 Personalización</button>
+            <button class="tab-btn" id="tabBtnServicios" onclick="cambiarTab('servicios')">✂️ Servicios</button>
+        </div>
+
+        <!-- ===================== TAB: DASHBOARD ===================== -->
+        <div class="tab-content active" id="tabDashboard">
         <!-- Dashboard de Estadísticas -->
         <div class="dashboard" id="dashboard">
             <div class="stat-card">
@@ -631,6 +1125,217 @@
                 </div>
             </div>
         </div>
+        </div>
+        <!-- =================== FIN TAB: DASHBOARD =================== -->
+
+        <!-- ===================== TAB: PERSONALIZACIÓN ===================== -->
+        <div class="tab-content" id="tabPersonalizacion">
+
+            <!-- Datos básicos -->
+            <div class="personalizacion-section">
+                <h2>Datos básicos</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="pNombre">Nombre</label>
+                        <input type="text" id="pNombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="pRubro">Rubro</label>
+                        <input type="text" id="pRubro">
+                    </div>
+                    <div class="form-group">
+                        <label for="pDireccion">Dirección</label>
+                        <input type="text" id="pDireccion">
+                    </div>
+                    <div class="form-group">
+                        <label for="pTelefono">Teléfono</label>
+                        <input type="tel" id="pTelefono">
+                    </div>
+                    <div class="form-group">
+                        <label for="pWhatsapp">WhatsApp</label>
+                        <input type="tel" id="pWhatsapp">
+                    </div>
+                    <div class="form-group">
+                        <label for="pEmail">Email</label>
+                        <input type="email" id="pEmail">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="pDescripcion">Descripción / Nosotros</label>
+                        <textarea id="pDescripcion" rows="4" placeholder="Contanos sobre el negocio..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Colores -->
+            <div class="personalizacion-section">
+                <h2>Colores</h2>
+                <div class="colores-grid">
+                    <div class="color-field">
+                        <label for="pColorPrimario">Color Primario</label>
+                        <input type="color" id="pColorPrimario" oninput="previsualizarColores()">
+                    </div>
+                    <div class="color-field">
+                        <label for="pColorAcento">Color Acento</label>
+                        <input type="color" id="pColorAcento" oninput="previsualizarColores()">
+                    </div>
+                    <div class="color-field">
+                        <label for="pColorTexto">Color Texto</label>
+                        <input type="color" id="pColorTexto" oninput="previsualizarColores()">
+                    </div>
+                    <div class="color-field">
+                        <label for="pColorTextoClaro">Color Texto Claro</label>
+                        <input type="color" id="pColorTextoClaro" oninput="previsualizarColores()">
+                    </div>
+                    <div class="color-field">
+                        <label for="pColorFondo">Color Fondo</label>
+                        <input type="color" id="pColorFondo" oninput="previsualizarColores()">
+                    </div>
+                    <div class="color-field">
+                        <label for="pColorFondoClaro">Color Fondo Claro</label>
+                        <input type="color" id="pColorFondoClaro" oninput="previsualizarColores()">
+                    </div>
+                </div>
+                <div class="presets-row">
+                    <button type="button" class="preset-btn" onclick="aplicarPreset('dorado')">
+                        <span class="preset-swatch" style="background:#d4af37;"></span> Dorado clásico
+                    </button>
+                    <button type="button" class="preset-btn" onclick="aplicarPreset('azul')">
+                        <span class="preset-swatch" style="background:#4a90d9;"></span> Azul plateado
+                    </button>
+                    <button type="button" class="preset-btn" onclick="aplicarPreset('verde')">
+                        <span class="preset-swatch" style="background:#6b8f3c;"></span> Verde tierra
+                    </button>
+                </div>
+            </div>
+
+            <!-- Logo y foto de portada -->
+            <div class="personalizacion-section">
+                <h2>Logo y foto de portada</h2>
+                <div class="upload-row">
+                    <div class="upload-box">
+                        <label><strong>Logo</strong></label>
+                        <p class="upload-hint">Recomendado: imagen cuadrada, 200×200px o más. PNG con fondo transparente queda mejor.</p>
+                        <div class="upload-preview" id="previewLogo">Sin logo</div>
+                        <input type="file" id="inputLogo" accept="image/png,image/jpeg,image/webp">
+                        <button type="button" class="btn btn-primary btn-sm" onclick="subirLogo()">Subir</button>
+                        <div class="upload-error" id="errorLogo"></div>
+                    </div>
+                    <div class="upload-box">
+                        <label><strong>Foto de portada</strong></label>
+                        <p class="upload-hint">Recomendado: imagen horizontal (paisaje), 1920×1080px o más. Se usa de fondo y se recorta al ancho de la pantalla.</p>
+                        <div class="upload-preview" id="previewHero">Sin foto de portada</div>
+                        <input type="file" id="inputHero" accept="image/png,image/jpeg,image/webp">
+                        <button type="button" class="btn btn-primary btn-sm" onclick="subirHero()">Subir</button>
+                        <div class="upload-error" id="errorHero"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Galería de fotos -->
+            <div class="personalizacion-section">
+                <h2>Galería de fotos</h2>
+                <p class="upload-hint">Recomendado: 800×600px o más, cualquier proporción (se recortan a un mismo alto en la grilla).</p>
+                <div class="galeria-grid" id="galeriaGrid"></div>
+                <div class="upload-row">
+                    <input type="file" id="inputGaleria" accept="image/png,image/jpeg,image/webp">
+                    <button type="button" class="btn btn-primary btn-sm" onclick="agregarFotoGaleria()">Agregar foto</button>
+                </div>
+                <div class="upload-error" id="errorGaleria"></div>
+            </div>
+
+            <!-- Horarios de atención -->
+            <div class="personalizacion-section">
+                <h2>Horarios de atención</h2>
+                <table class="horarios-tabla" id="tablaHorarios">
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <!-- Orden de secciones de la landing -->
+            <div class="personalizacion-section">
+                <h2>Orden de secciones de la landing</h2>
+                <p style="margin-bottom: 1rem; color: var(--text-light);">Arrastrá las tarjetas para definir el orden en que aparecen en la página principal.</p>
+                <div class="secciones-orden-grid" id="seccionesOrdenGrid">
+                    <div class="seccion-card" data-seccion="servicios">☰ Servicios</div>
+                    <div class="seccion-card" data-seccion="nosotros">☰ Nosotros</div>
+                    <div class="seccion-card" data-seccion="contacto">☰ Contacto</div>
+                </div>
+            </div>
+
+            <!-- Guardar cambios (Datos básicos + Colores + Horarios + Orden de secciones) -->
+            <div class="personalizacion-section">
+                <div class="guardar-bar">
+                    <button type="button" class="btn btn-success" onclick="guardarCambiosNegocio()">💾 Guardar cambios</button>
+                    <span class="guardar-msg" id="guardarMsg"></span>
+                </div>
+            </div>
+
+        </div>
+        <!-- =================== FIN TAB: PERSONALIZACIÓN =================== -->
+
+        <!-- ===================== TAB: SERVICIOS ===================== -->
+        <div class="tab-content" id="tabServicios">
+
+            <!-- Formulario de alta / edición -->
+            <div class="personalizacion-section">
+                <div class="servicios-header">
+                    <h2 id="tituloFormServicio">Agregar servicio</h2>
+                </div>
+
+                <div class="sugerencias-row" id="sugerenciasServicios">
+                    <button type="button" class="sugerencia-chip" onclick="aplicarSugerenciaServicio('corteClasico')">Corte Clásico</button>
+                    <button type="button" class="sugerencia-chip" onclick="aplicarSugerenciaServicio('corteBarba')">Corte + Barba</button>
+                    <button type="button" class="sugerencia-chip" onclick="aplicarSugerenciaServicio('barba')">Barba</button>
+                    <button type="button" class="sugerencia-chip" onclick="aplicarSugerenciaServicio('corteNinos')">Corte Niños</button>
+                </div>
+
+                <form id="formServicio" onsubmit="return guardarServicio(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="sNombre">Nombre</label>
+                            <input type="text" id="sNombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sPrecio">Precio</label>
+                            <input type="number" id="sPrecio" min="0" step="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sDuracion">Duración (minutos)</label>
+                            <input type="number" id="sDuracion" min="1" step="1" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="sDescripcion">Descripción</label>
+                            <input type="text" id="sDescripcion">
+                        </div>
+                    </div>
+                    <div class="guardar-bar">
+                        <button type="submit" class="btn btn-success">💾 Guardar</button>
+                        <button type="button" class="btn" onclick="cancelarFormServicio()">Cancelar</button>
+                        <span class="guardar-msg" id="servicioFormMsg"></span>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Listado de servicios -->
+            <div class="personalizacion-section">
+                <div class="servicios-header">
+                    <h2>Servicios</h2>
+                    <button class="btn btn-primary btn-sm" onclick="cargarServicios()">🔄 Actualizar</button>
+                </div>
+                <div id="loadingServicios" class="loading" style="display:none;">
+                    <div class="spinner"></div>
+                    <p>Cargando servicios...</p>
+                </div>
+                <div class="servicios-grid" id="serviciosGrid"></div>
+                <div id="serviciosEmptyState" class="empty-state" style="display:none;">
+                    <div class="empty-state-icon">✂️</div>
+                    <h3>No hay servicios</h3>
+                    <p>Todavía no agregaste ningún servicio</p>
+                </div>
+            </div>
+
+        </div>
+        <!-- =================== FIN TAB: SERVICIOS =================== -->
     </div>
 
     <!-- Modal para cancelar turno -->
@@ -653,10 +1358,705 @@
         </div>
     </div>
 
+    <script src="/js/negocio-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
     <script>
         const API_URL = window.location.origin;
         let turnoACancelar = null;
         let isDarkMode = false;
+        let negocioActual = null;
+        let sortableGaleria = null;
+        let sortableSecciones = null;
+        let serviciosCargadosUnaVez = false;
+        let servicioEnEdicionId = null;
+        let serviciosActuales = [];
+
+        // Nombres de días en inglés (como los usa el backend, DayOfWeek) mapeados
+        // al español, en el orden en que se deben mostrar (Lunes a Domingo).
+        const DIAS_SEMANA = [
+            { en: 'Monday', es: 'Lunes' },
+            { en: 'Tuesday', es: 'Martes' },
+            { en: 'Wednesday', es: 'Miércoles' },
+            { en: 'Thursday', es: 'Jueves' },
+            { en: 'Friday', es: 'Viernes' },
+            { en: 'Saturday', es: 'Sábado' },
+            { en: 'Sunday', es: 'Domingo' }
+        ];
+
+        // Paletas de colores predefinidas para el botón de "preset"
+        const PRESETS_COLORES = {
+            dorado: {
+                colorPrimario: '#1a1a1a', colorAcento: '#d4af37', colorTexto: '#333333',
+                colorTextoClaro: '#666666', colorFondo: '#ffffff', colorFondoClaro: '#f8f8f8'
+            },
+            azul: {
+                colorPrimario: '#0f2745', colorAcento: '#4a90d9', colorTexto: '#1c2b3a',
+                colorTextoClaro: '#5a6b7a', colorFondo: '#ffffff', colorFondoClaro: '#eef3f8'
+            },
+            verde: {
+                colorPrimario: '#2f3b23', colorAcento: '#8ba463', colorTexto: '#2b2b22',
+                colorTextoClaro: '#6b6b5a', colorFondo: '#fdfcf7', colorFondoClaro: '#f2f0e6'
+            }
+        };
+
+        // Sugerencias rápidas de servicios (solo para precargar el formulario de
+        // alta, no existen como tabla en el backend). El precio queda como punto
+        // de partida editable: nunca se bloquea.
+        const SUGERENCIAS_SERVICIOS = {
+            corteClasico: { nombre: 'Corte Clásico', descripcion: 'Corte profesional', precio: 5000, duracionMinutos: 30 },
+            corteBarba: { nombre: 'Corte + Barba', descripcion: 'Combo completo', precio: 7500, duracionMinutos: 45 },
+            barba: { nombre: 'Barba', descripcion: 'Perfilado de barba', precio: 3500, duracionMinutos: 20 },
+            corteNinos: { nombre: 'Corte Niños', descripcion: 'Corte para niños', precio: 4000, duracionMinutos: 25 }
+        };
+
+        // ===================== TABS =====================
+        function cambiarTab(tab) {
+            const esDashboard = tab === 'dashboard';
+            const esPersonalizacion = tab === 'personalizacion';
+            const esServicios = tab === 'servicios';
+
+            document.getElementById('tabDashboard').classList.toggle('active', esDashboard);
+            document.getElementById('tabPersonalizacion').classList.toggle('active', esPersonalizacion);
+            document.getElementById('tabServicios').classList.toggle('active', esServicios);
+            document.getElementById('tabBtnDashboard').classList.toggle('active', esDashboard);
+            document.getElementById('tabBtnPersonalizacion').classList.toggle('active', esPersonalizacion);
+            document.getElementById('tabBtnServicios').classList.toggle('active', esServicios);
+
+            if (esServicios && !serviciosCargadosUnaVez) {
+                cargarServicios();
+            }
+        }
+
+        // Cargar configuración del negocio (título, logo, colores del tema)
+        async function inicializarNegocio() {
+            try {
+                const negocio = await cargarConfigNegocio();
+                negocioActual = negocio;
+                document.title = `Panel de Administración - ${negocio.nombre}`;
+                poblarFormularioPersonalizacion(negocio);
+
+                const navLogo = document.getElementById('navLogo');
+                if (navLogo) {
+                    if (negocio.logoUrl) {
+                        navLogo.innerHTML = '';
+                        const img = document.createElement('img');
+                        img.src = negocio.logoUrl;
+                        img.alt = negocio.nombre;
+                        img.style.height = '1.8rem';
+                        img.style.verticalAlign = 'middle';
+                        navLogo.appendChild(img);
+                    } else {
+                        navLogo.textContent = `✂️ ${negocio.nombre}`;
+                    }
+                }
+            } catch (error) {
+                console.error('Error cargando configuración del negocio:', error);
+            }
+        }
+
+        // ===================== PERSONALIZACIÓN =====================
+
+        // Vuelca los datos del negocio (ya cargados desde GET /api/negocio) en el
+        // formulario de la pestaña Personalización: datos básicos, colores,
+        // logo/hero, galería, horarios y orden de secciones.
+        function poblarFormularioPersonalizacion(negocio) {
+            document.getElementById('pNombre').value = negocio.nombre || '';
+            document.getElementById('pRubro').value = negocio.rubro || '';
+            document.getElementById('pDireccion').value = negocio.direccion || '';
+            document.getElementById('pTelefono').value = negocio.telefono || '';
+            document.getElementById('pWhatsapp').value = negocio.whatsApp || '';
+            document.getElementById('pEmail').value = negocio.email || '';
+            document.getElementById('pDescripcion').value = negocio.descripcionNosotros || '';
+
+            document.getElementById('pColorPrimario').value = negocio.colorPrimario || '#1a1a1a';
+            document.getElementById('pColorAcento').value = negocio.colorAcento || '#d4af37';
+            document.getElementById('pColorTexto').value = negocio.colorTexto || '#333333';
+            document.getElementById('pColorTextoClaro').value = negocio.colorTextoClaro || '#666666';
+            document.getElementById('pColorFondo').value = negocio.colorFondo || '#ffffff';
+            document.getElementById('pColorFondoClaro').value = negocio.colorFondoClaro || '#f8f8f8';
+
+            actualizarPreviewImagen('previewLogo', negocio.logoUrl, 'Sin logo');
+            actualizarPreviewImagen('previewHero', negocio.heroImagenUrl, 'Sin foto de portada');
+
+            renderGaleria(negocio.galeria || []);
+            renderHorarios(negocio.horarios || []);
+            renderOrdenSecciones(negocio.ordenSecciones || ['servicios', 'nosotros', 'contacto']);
+        }
+
+        function actualizarPreviewImagen(elementId, url, textoVacio) {
+            const el = document.getElementById(elementId);
+            if (url) {
+                el.style.backgroundImage = `url('${url}')`;
+                el.textContent = '';
+            } else {
+                el.style.backgroundImage = '';
+                el.textContent = textoVacio;
+            }
+        }
+
+        // Aplica en vivo los 6 colores actuales de los inputs (sin guardar todavía)
+        function previsualizarColores() {
+            aplicarTemaNegocio({
+                colorPrimario: document.getElementById('pColorPrimario').value,
+                colorAcento: document.getElementById('pColorAcento').value,
+                colorTexto: document.getElementById('pColorTexto').value,
+                colorTextoClaro: document.getElementById('pColorTextoClaro').value,
+                colorFondo: document.getElementById('pColorFondo').value,
+                colorFondoClaro: document.getElementById('pColorFondoClaro').value
+            });
+        }
+
+        function aplicarPreset(nombrePreset) {
+            const preset = PRESETS_COLORES[nombrePreset];
+            if (!preset) return;
+
+            document.getElementById('pColorPrimario').value = preset.colorPrimario;
+            document.getElementById('pColorAcento').value = preset.colorAcento;
+            document.getElementById('pColorTexto').value = preset.colorTexto;
+            document.getElementById('pColorTextoClaro').value = preset.colorTextoClaro;
+            document.getElementById('pColorFondo').value = preset.colorFondo;
+            document.getElementById('pColorFondoClaro').value = preset.colorFondoClaro;
+
+            previsualizarColores();
+        }
+
+        // Muestra un mensaje de error legible ante una respuesta no-ok del backend
+        async function mostrarErrorRespuesta(response, elementoError) {
+            if (response.status === 401) {
+                if (elementoError) elementoError.textContent = 'Sesión expirada, volvé a iniciar sesión';
+                return;
+            }
+            try {
+                const data = await response.json();
+                if (elementoError) elementoError.textContent = data.mensaje || 'Ocurrió un error inesperado';
+            } catch (e) {
+                if (elementoError) elementoError.textContent = 'Ocurrió un error inesperado';
+            }
+        }
+
+        async function subirLogo() {
+            const input = document.getElementById('inputLogo');
+            const errorEl = document.getElementById('errorLogo');
+            errorEl.textContent = '';
+
+            if (!input.files || input.files.length === 0) {
+                errorEl.textContent = 'Seleccioná un archivo primero';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('archivo', input.files[0]);
+
+            try {
+                const response = await fetch(`${API_URL}/api/negocio/logo`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    await mostrarErrorRespuesta(response, errorEl);
+                    return;
+                }
+
+                const data = await response.json();
+                actualizarPreviewImagen('previewLogo', data.url, 'Sin logo');
+                input.value = '';
+            } catch (error) {
+                console.error('Error subiendo logo:', error);
+                errorEl.textContent = 'Error al conectar con el servidor';
+            }
+        }
+
+        async function subirHero() {
+            const input = document.getElementById('inputHero');
+            const errorEl = document.getElementById('errorHero');
+            errorEl.textContent = '';
+
+            if (!input.files || input.files.length === 0) {
+                errorEl.textContent = 'Seleccioná un archivo primero';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('archivo', input.files[0]);
+
+            try {
+                const response = await fetch(`${API_URL}/api/negocio/hero`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    await mostrarErrorRespuesta(response, errorEl);
+                    return;
+                }
+
+                const data = await response.json();
+                actualizarPreviewImagen('previewHero', data.url, 'Sin foto de portada');
+                input.value = '';
+            } catch (error) {
+                console.error('Error subiendo foto de portada:', error);
+                errorEl.textContent = 'Error al conectar con el servidor';
+            }
+        }
+
+        // ---------- Galería ----------
+
+        function renderGaleria(galeria) {
+            const grid = document.getElementById('galeriaGrid');
+            grid.innerHTML = '';
+
+            galeria.forEach(foto => {
+                const div = document.createElement('div');
+                div.className = 'galeria-item';
+                div.dataset.id = foto.id;
+                div.innerHTML = `
+                    <img src="${foto.url}" alt="Foto de galería">
+                    <button type="button" class="btn-eliminar-foto" onclick="eliminarFotoGaleria(${foto.id})">🗑️ Eliminar</button>
+                `;
+                grid.appendChild(div);
+            });
+
+            if (sortableGaleria) {
+                sortableGaleria.destroy();
+                sortableGaleria = null;
+            }
+            sortableGaleria = new Sortable(grid, { animation: 150, onEnd: () => guardarOrdenGaleria() });
+        }
+
+        async function agregarFotoGaleria() {
+            const input = document.getElementById('inputGaleria');
+            const errorEl = document.getElementById('errorGaleria');
+            errorEl.textContent = '';
+
+            if (!input.files || input.files.length === 0) {
+                errorEl.textContent = 'Seleccioná un archivo primero';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('archivo', input.files[0]);
+
+            try {
+                const response = await fetch(`${API_URL}/api/negocio/galeria`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    await mostrarErrorRespuesta(response, errorEl);
+                    return;
+                }
+
+                const nuevaFoto = await response.json();
+                if (!negocioActual.galeria) negocioActual.galeria = [];
+                negocioActual.galeria.push(nuevaFoto);
+                renderGaleria(negocioActual.galeria);
+                input.value = '';
+            } catch (error) {
+                console.error('Error agregando foto a la galería:', error);
+                errorEl.textContent = 'Error al conectar con el servidor';
+            }
+        }
+
+        async function eliminarFotoGaleria(id) {
+            if (!confirm('¿Eliminar esta foto de la galería?')) return;
+
+            const errorEl = document.getElementById('errorGaleria');
+            errorEl.textContent = '';
+
+            try {
+                const response = await fetch(`${API_URL}/api/negocio/galeria/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (!response.ok) {
+                    await mostrarErrorRespuesta(response, errorEl);
+                    return;
+                }
+
+                negocioActual.galeria = (negocioActual.galeria || []).filter(f => f.id !== id);
+                renderGaleria(negocioActual.galeria);
+            } catch (error) {
+                console.error('Error eliminando foto de la galería:', error);
+                errorEl.textContent = 'Error al conectar con el servidor';
+            }
+        }
+
+        async function guardarOrdenGaleria() {
+            const grid = document.getElementById('galeriaGrid');
+            const idsEnOrden = Array.from(grid.children).map(el => parseInt(el.dataset.id, 10));
+            const errorEl = document.getElementById('errorGaleria');
+            errorEl.textContent = '';
+
+            try {
+                const response = await fetch(`${API_URL}/api/negocio/galeria/orden`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ idsEnOrden })
+                });
+
+                if (!response.ok) {
+                    await mostrarErrorRespuesta(response, errorEl);
+                    return;
+                }
+            } catch (error) {
+                console.error('Error guardando orden de la galería:', error);
+                errorEl.textContent = 'Error al conectar con el servidor';
+            }
+        }
+
+        // ---------- Horarios ----------
+
+        function renderHorarios(horarios) {
+            const tbody = document.querySelector('#tablaHorarios tbody');
+            tbody.innerHTML = '';
+
+            DIAS_SEMANA.forEach(({ en, es }) => {
+                const horario = horarios.find(h => h.dia === en) || { abierto: false, apertura: null, cierre: null };
+
+                const tr = document.createElement('tr');
+                tr.dataset.dia = en;
+                tr.innerHTML = `
+                    <td><span class="dia-label">${es}</span></td>
+                    <td>
+                        <label>
+                            <input type="checkbox" class="horario-abierto" ${horario.abierto ? 'checked' : ''} onchange="toggleHorarioDia(this)">
+                            Abierto
+                        </label>
+                    </td>
+                    <td><input type="time" class="horario-apertura" value="${horario.apertura || '09:00'}" ${horario.abierto ? '' : 'disabled'}></td>
+                    <td><input type="time" class="horario-cierre" value="${horario.cierre || '20:00'}" ${horario.abierto ? '' : 'disabled'}></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function toggleHorarioDia(checkbox) {
+            const tr = checkbox.closest('tr');
+            const abierto = checkbox.checked;
+            tr.querySelector('.horario-apertura').disabled = !abierto;
+            tr.querySelector('.horario-cierre').disabled = !abierto;
+        }
+
+        function leerHorariosDelFormulario() {
+            const filas = document.querySelectorAll('#tablaHorarios tbody tr');
+            return Array.from(filas).map(tr => {
+                const abierto = tr.querySelector('.horario-abierto').checked;
+                return {
+                    dia: tr.dataset.dia,
+                    abierto,
+                    apertura: abierto ? tr.querySelector('.horario-apertura').value : null,
+                    cierre: abierto ? tr.querySelector('.horario-cierre').value : null
+                };
+            });
+        }
+
+        // ---------- Orden de secciones ----------
+
+        function renderOrdenSecciones(ordenSecciones) {
+            const grid = document.getElementById('seccionesOrdenGrid');
+            const tarjetas = {};
+            grid.querySelectorAll('.seccion-card').forEach(card => {
+                tarjetas[card.dataset.seccion] = card;
+            });
+
+            ordenSecciones.forEach(seccion => {
+                if (tarjetas[seccion]) grid.appendChild(tarjetas[seccion]);
+            });
+
+            if (sortableSecciones) {
+                sortableSecciones.destroy();
+                sortableSecciones = null;
+            }
+            sortableSecciones = new Sortable(grid, { animation: 150 });
+        }
+
+        function leerOrdenSeccionesDelFormulario() {
+            const grid = document.getElementById('seccionesOrdenGrid');
+            return Array.from(grid.querySelectorAll('.seccion-card')).map(card => card.dataset.seccion);
+        }
+
+        // ---------- Guardar (Datos básicos + Colores + Horarios + Orden de secciones) ----------
+
+        async function guardarCambiosNegocio() {
+            const msgEl = document.getElementById('guardarMsg');
+            msgEl.textContent = '';
+            msgEl.className = 'guardar-msg';
+
+            const payload = {
+                nombre: document.getElementById('pNombre').value,
+                rubro: document.getElementById('pRubro').value,
+                colorPrimario: document.getElementById('pColorPrimario').value,
+                colorAcento: document.getElementById('pColorAcento').value,
+                colorTexto: document.getElementById('pColorTexto').value,
+                colorTextoClaro: document.getElementById('pColorTextoClaro').value,
+                colorFondo: document.getElementById('pColorFondo').value,
+                colorFondoClaro: document.getElementById('pColorFondoClaro').value,
+                themePresetId: negocioActual ? negocioActual.themePresetId : null,
+                direccion: document.getElementById('pDireccion').value,
+                telefono: document.getElementById('pTelefono').value,
+                whatsApp: document.getElementById('pWhatsapp').value,
+                email: document.getElementById('pEmail').value,
+                mapaEmbedUrl: negocioActual ? negocioActual.mapaEmbedUrl : null,
+                descripcionNosotros: document.getElementById('pDescripcion').value,
+                ordenSecciones: leerOrdenSeccionesDelFormulario(),
+                horarios: leerHorariosDelFormulario()
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/api/negocio`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        msgEl.textContent = 'Sesión expirada, volvé a iniciar sesión';
+                        msgEl.className = 'guardar-msg error';
+                        return;
+                    }
+                    await mostrarErrorRespuesta(response, msgEl);
+                    msgEl.className = 'guardar-msg error';
+                    return;
+                }
+
+                const negocioActualizado = await response.json();
+                negocioActual = negocioActualizado;
+                poblarFormularioPersonalizacion(negocioActualizado);
+
+                msgEl.textContent = '✓ Cambios guardados correctamente';
+                msgEl.className = 'guardar-msg ok';
+            } catch (error) {
+                console.error('Error guardando cambios del negocio:', error);
+                msgEl.textContent = 'Error al conectar con el servidor';
+                msgEl.className = 'guardar-msg error';
+            }
+        }
+
+        // ===================== SERVICIOS (ABM) =====================
+
+        async function cargarServicios() {
+            const loadingEl = document.getElementById('loadingServicios');
+            const gridEl = document.getElementById('serviciosGrid');
+            const emptyEl = document.getElementById('serviciosEmptyState');
+
+            loadingEl.style.display = 'block';
+            gridEl.style.display = 'none';
+            emptyEl.style.display = 'none';
+
+            try {
+                const response = await fetch(`${API_URL}/api/servicios/admin`);
+
+                if (!response.ok) {
+                    loadingEl.style.display = 'none';
+                    await mostrarErrorRespuesta(response, document.getElementById('servicioFormMsg'));
+                    return;
+                }
+
+                const servicios = await response.json();
+                serviciosCargadosUnaVez = true;
+                renderServicios(servicios);
+            } catch (error) {
+                console.error('Error cargando servicios:', error);
+                loadingEl.style.display = 'none';
+                emptyEl.style.display = 'block';
+            }
+        }
+
+        function renderServicios(servicios) {
+            const loadingEl = document.getElementById('loadingServicios');
+            const gridEl = document.getElementById('serviciosGrid');
+            const emptyEl = document.getElementById('serviciosEmptyState');
+
+            loadingEl.style.display = 'none';
+
+            if (!servicios || servicios.length === 0) {
+                gridEl.style.display = 'none';
+                emptyEl.style.display = 'block';
+                return;
+            }
+
+            emptyEl.style.display = 'none';
+            gridEl.style.display = 'grid';
+            gridEl.innerHTML = '';
+
+            servicios.forEach(servicio => {
+                const div = document.createElement('div');
+                div.className = 'servicio-card' + (servicio.activo ? '' : ' inactivo');
+                div.innerHTML = `
+                    <div class="servicio-card-titulo">
+                        <strong>${servicio.nombre}</strong>
+                        <span class="badge ${servicio.activo ? 'badge-activo' : 'badge-inactivo'}">${servicio.activo ? 'Activo' : 'Inactivo'}</span>
+                    </div>
+                    <div class="servicio-card-desc">${servicio.descripcion || ''}</div>
+                    <div class="servicio-card-meta">
+                        <span>$${servicio.precio.toLocaleString()}</span>
+                        <span>${servicio.duracionMinutos} min</span>
+                    </div>
+                    <div class="servicio-card-acciones">
+                        <button type="button" class="btn btn-info btn-sm" onclick="editarServicio(${servicio.id})">✏️ Editar</button>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="toggleActivoServicio(${servicio.id})">${servicio.activo ? '⏸️ Desactivar' : '▶️ Activar'}</button>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="eliminarServicio(${servicio.id})">🗑️ Eliminar</button>
+                    </div>
+                `;
+                gridEl.appendChild(div);
+            });
+
+            // Guardamos la lista para poder editar/togglear sin volver a pedirla al backend
+            serviciosActuales = servicios;
+        }
+
+        function aplicarSugerenciaServicio(clave) {
+            const sugerencia = SUGERENCIAS_SERVICIOS[clave];
+            if (!sugerencia) return;
+
+            // Las sugerencias siempre precargan el formulario en modo ALTA, nunca edición
+            cancelarFormServicio();
+
+            document.getElementById('sNombre').value = sugerencia.nombre;
+            document.getElementById('sDescripcion').value = sugerencia.descripcion;
+            document.getElementById('sDuracion').value = sugerencia.duracionMinutos;
+            document.getElementById('sPrecio').value = sugerencia.precio;
+            document.getElementById('sPrecio').focus();
+        }
+
+        function editarServicio(id) {
+            const servicio = (serviciosActuales || []).find(s => s.id === id);
+            if (!servicio) return;
+
+            servicioEnEdicionId = id;
+            document.getElementById('tituloFormServicio').textContent = `Editar servicio: ${servicio.nombre}`;
+            document.getElementById('sugerenciasServicios').style.display = 'none';
+            document.getElementById('sNombre').value = servicio.nombre;
+            document.getElementById('sDescripcion').value = servicio.descripcion || '';
+            document.getElementById('sPrecio').value = servicio.precio;
+            document.getElementById('sDuracion').value = servicio.duracionMinutos;
+            document.getElementById('servicioFormMsg').textContent = '';
+            document.getElementById('servicioFormMsg').className = 'guardar-msg';
+
+            document.getElementById('formServicio').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function cancelarFormServicio() {
+            servicioEnEdicionId = null;
+            document.getElementById('tituloFormServicio').textContent = 'Agregar servicio';
+            document.getElementById('sugerenciasServicios').style.display = 'flex';
+            document.getElementById('formServicio').reset();
+            document.getElementById('servicioFormMsg').textContent = '';
+            document.getElementById('servicioFormMsg').className = 'guardar-msg';
+        }
+
+        async function guardarServicio(event) {
+            event.preventDefault();
+
+            const msgEl = document.getElementById('servicioFormMsg');
+            msgEl.textContent = '';
+            msgEl.className = 'guardar-msg';
+
+            const payload = {
+                nombre: document.getElementById('sNombre').value,
+                descripcion: document.getElementById('sDescripcion').value,
+                precio: parseFloat(document.getElementById('sPrecio').value),
+                duracionMinutos: parseInt(document.getElementById('sDuracion').value, 10)
+            };
+
+            const esEdicion = servicioEnEdicionId !== null;
+            if (esEdicion) {
+                const servicioActual = (serviciosActuales || []).find(s => s.id === servicioEnEdicionId);
+                payload.activo = servicioActual ? servicioActual.activo : true;
+            }
+
+            const url = esEdicion ? `${API_URL}/api/servicios/${servicioEnEdicionId}` : `${API_URL}/api/servicios`;
+            const method = esEdicion ? 'PUT' : 'POST';
+
+            try {
+                const response = await fetch(url, {
+                    method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    await mostrarErrorRespuesta(response, msgEl);
+                    msgEl.className = 'guardar-msg error';
+                    return false;
+                }
+
+                cancelarFormServicio();
+                msgEl.textContent = '✓ Servicio guardado correctamente';
+                msgEl.className = 'guardar-msg ok';
+                await cargarServicios();
+            } catch (error) {
+                console.error('Error guardando servicio:', error);
+                msgEl.textContent = 'Error al conectar con el servidor';
+                msgEl.className = 'guardar-msg error';
+            }
+
+            return false;
+        }
+
+        async function toggleActivoServicio(id) {
+            const servicio = (serviciosActuales || []).find(s => s.id === id);
+            if (!servicio) return;
+
+            const payload = {
+                nombre: servicio.nombre,
+                descripcion: servicio.descripcion,
+                precio: servicio.precio,
+                duracionMinutos: servicio.duracionMinutos,
+                activo: !servicio.activo
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/api/servicios/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    await mostrarErrorRespuesta(response, document.getElementById('servicioFormMsg'));
+                    return;
+                }
+
+                await cargarServicios();
+            } catch (error) {
+                console.error('Error actualizando estado del servicio:', error);
+                document.getElementById('servicioFormMsg').textContent = 'Error al conectar con el servidor';
+                document.getElementById('servicioFormMsg').className = 'guardar-msg error';
+            }
+        }
+
+        async function eliminarServicio(id) {
+            const servicio = (serviciosActuales || []).find(s => s.id === id);
+            const nombre = servicio ? servicio.nombre : 'este servicio';
+            if (!confirm(`¿Eliminar "${nombre}"? Esta acción no se puede deshacer.`)) return;
+
+            const msgEl = document.getElementById('servicioFormMsg');
+            msgEl.textContent = '';
+            msgEl.className = 'guardar-msg';
+
+            try {
+                const response = await fetch(`${API_URL}/api/servicios/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (!response.ok) {
+                    await mostrarErrorRespuesta(response, msgEl);
+                    msgEl.className = 'guardar-msg error';
+                    return;
+                }
+
+                if (servicioEnEdicionId === id) cancelarFormServicio();
+                await cargarServicios();
+            } catch (error) {
+                console.error('Error eliminando servicio:', error);
+                msgEl.textContent = 'Error al conectar con el servidor';
+                msgEl.className = 'guardar-msg error';
+            }
+        }
 
         // VERIFICAR AUTENTICACIÓN AL CARGAR LA PÁGINA
         async function verificarAutenticacion() {
@@ -693,6 +2093,7 @@
 
         // Cargar datos al iniciar (después de verificar autenticación)
         window.addEventListener('load', async () => {
+            inicializarNegocio();
             const autenticado = await verificarAutenticacion();
             if (autenticado) {
                 cargarEstadisticas();
