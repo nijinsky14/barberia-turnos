@@ -1148,12 +1148,8 @@
                         <input type="text" id="pDireccion">
                     </div>
                     <div class="form-group">
-                        <label for="pTelefono">Teléfono</label>
-                        <input type="tel" id="pTelefono">
-                    </div>
-                    <div class="form-group">
                         <label for="pWhatsapp">WhatsApp</label>
-                        <input type="tel" id="pWhatsapp">
+                        <input type="tel" id="pWhatsapp" placeholder="5493416901109">
                     </div>
                     <div class="form-group">
                         <label for="pEmail">Email</label>
@@ -1463,7 +1459,6 @@
             document.getElementById('pNombre').value = negocio.nombre || '';
             document.getElementById('pRubro').value = negocio.rubro || '';
             document.getElementById('pDireccion').value = negocio.direccion || '';
-            document.getElementById('pTelefono').value = negocio.telefono || '';
             document.getElementById('pWhatsapp').value = negocio.whatsApp || '';
             document.getElementById('pEmail').value = negocio.email || '';
             document.getElementById('pDescripcion').value = negocio.descripcionNosotros || '';
@@ -1795,7 +1790,6 @@
                 colorFondoClaro: document.getElementById('pColorFondoClaro').value,
                 themePresetId: negocioActual ? negocioActual.themePresetId : null,
                 direccion: document.getElementById('pDireccion').value,
-                telefono: document.getElementById('pTelefono').value,
                 whatsApp: document.getElementById('pWhatsapp').value,
                 email: document.getElementById('pEmail').value,
                 mapaEmbedUrl: negocioActual ? negocioActual.mapaEmbedUrl : null,

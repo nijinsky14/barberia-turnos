@@ -51,7 +51,6 @@ namespace BarberiaWeb.Services
                     .Replace("{{Hora}}", horaTurno)
                     .Replace("{{Precio}}", precio.ToString("N0"))
                     .Replace("{{Direccion}}", negocio.Direccion)
-                    .Replace("{{Telefono}}", negocio.Telefono)
                     .Replace("{{WhatsApp}}", negocio.WhatsApp)
                     .Replace("{{Anio}}", DateTime.Now.Year.ToString());
 

@@ -59,7 +59,6 @@ namespace BarberiaWeb.Controllers
             negocio.ColorFondoClaro = dto.ColorFondoClaro;
             negocio.ThemePresetId = dto.ThemePresetId;
             negocio.Direccion = dto.Direccion;
-            negocio.Telefono = dto.Telefono;
             negocio.WhatsApp = dto.WhatsApp;
             negocio.Email = dto.Email;
             negocio.MapaEmbedUrl = dto.MapaEmbedUrl;
@@ -236,7 +235,6 @@ namespace BarberiaWeb.Controllers
                 ColorFondoClaro = negocio.ColorFondoClaro,
                 ThemePresetId = negocio.ThemePresetId,
                 Direccion = negocio.Direccion,
-                Telefono = negocio.Telefono,
                 WhatsApp = negocio.WhatsApp,
                 Email = negocio.Email,
                 MapaEmbedUrl = negocio.MapaEmbedUrl,

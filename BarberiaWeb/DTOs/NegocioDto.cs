@@ -27,7 +27,6 @@ namespace BarberiaWeb.DTOs
         public string? ThemePresetId { get; set; }
 
         public string Direccion { get; set; } = string.Empty;
-        public string Telefono { get; set; } = string.Empty;
         public string WhatsApp { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string? MapaEmbedUrl { get; set; }
@@ -63,7 +62,6 @@ namespace BarberiaWeb.DTOs
         [StringLength(50)] public string? ThemePresetId { get; set; }
 
         [StringLength(200)] public string Direccion { get; set; } = string.Empty;
-        [StringLength(30)] public string Telefono { get; set; } = string.Empty;
         [StringLength(30)] public string WhatsApp { get; set; } = string.Empty;
         [StringLength(100)] public string Email { get; set; } = string.Empty;
         [StringLength(500)] public string? MapaEmbedUrl { get; set; }

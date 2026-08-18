@@ -48,9 +48,6 @@ namespace BarberiaWeb.Models
         public string Direccion { get; set; } = string.Empty;
 
         [StringLength(30)]
-        public string Telefono { get; set; } = string.Empty;
-
-        [StringLength(30)]
         public string WhatsApp { get; set; } = string.Empty;
 
         [StringLength(100)]

@@ -4,6 +4,7 @@ using BarberiaWeb.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BarberiaWeb.Migrations
 {
     [DbContext(typeof(BarberiaDbContext))]
-    partial class BarberiaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260818163140_EliminarTelefonoNegocio")]
+    partial class EliminarTelefonoNegocio
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
