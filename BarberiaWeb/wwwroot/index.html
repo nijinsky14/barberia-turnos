@@ -178,6 +178,36 @@
             border: 1px solid #e8e8e8;
         }
 
+        .gallery {
+            padding: 6rem 2rem;
+            background: var(--bg-light);
+        }
+
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 12px;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         .service-card:hover {
             transform: translateY(-5px);
         }
@@ -835,7 +865,7 @@
     <!-- Header -->
     <header>
         <nav>
-            <div class="logo">✂️ LUCK BARBER</div>
+            <div class="logo" id="navLogo">✂️ LUCK BARBER</div>
             <div class="nav-links">
                 <a href="#servicios" class="nav-link">Servicios</a>
                 <a href="#nosotros" class="nav-link">Nosotros</a>
@@ -868,14 +898,9 @@
     <section class="about" id="nosotros">
         <div class="about-container">
             <h2 class="section-title">Nosotros</h2>
-            <div class="about-content">
-                <p>En <strong>LUCK BARBER</strong>, creemos que cada corte es una obra de arte. Desde 2018, nos dedicamos a ofrecer más que un servicio de barbería: creamos experiencias únicas donde el estilo y la personalidad de cada cliente se encuentran.</p>
-                
-                <p>Nuestro equipo de barberos profesionales está capacitado en las últimas tendencias y técnicas clásicas, garantizando resultados impecables en cada visita. Utilizamos productos premium y trabajamos con atención al detalle para que salgas luciendo exactamente como lo imaginás.</p>
-                
-                <p>Ubicados en el corazón de Rosario, nos hemos convertido en el punto de encuentro para quienes buscan calidad, confianza y un ambiente relajado. Ya sea un corte clásico, un fade moderno o un arreglo de barba profesional, en LUCK BARBER encontrás tu mejor versión.</p>
-                
-                <p><em>Tu estilo, nuestra pasión.</em></p>
+            <div class="about-content" id="aboutContent">
+                <p class="about-parrafo" id="aboutIntro">En <strong>LUCK BARBER</strong>, creemos que cada corte es una obra de arte. Desde 2018, nos dedicamos a ofrecer más que un servicio de barbería: creamos experiencias únicas donde el estilo y la personalidad de cada cliente se encuentran.</p>
+                <p class="about-tagline"><em>Tu estilo, nuestra pasión.</em></p>
             </div>
         </div>
     </section>
@@ -969,22 +994,31 @@
                 <div class="contact-map-wrapper">
                     <h3>Nuestra ubicación</h3>
                     <div class="map-container">
-                        <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3348.2!2d-60.6393!3d-32.9468!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95b7ab0f56f5e5e5%3A0x1234567890abcdef!2sAv.%20Pellegrini%2C%20Rosario%2C%20Santa%20Fe!5e0!3m2!1ses!2sar!4v1234567890123!5m2!1ses!2sar" 
-                            width="100%" 
-                            height="400" 
-                            style="border:0; border-radius: 12px;" 
-                            allowfullscreen="" 
+                        <iframe
+                            id="mapaIframe"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3348.2!2d-60.6393!3d-32.9468!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95b7ab0f56f5e5e5%3A0x1234567890abcdef!2sAv.%20Pellegrini%2C%20Rosario%2C%20Santa%20Fe!5e0!3m2!1ses!2sar!4v1234567890123!5m2!1ses!2sar"
+                            width="100%"
+                            height="400"
+                            style="border:0; border-radius: 12px;"
+                            allowfullscreen=""
                             loading="lazy">
                         </iframe>
                     </div>
                     <div class="contact-info">
-                        <p><strong>📍 Dirección:</strong> Av. Pellegrini 1234, Rosario, Santa Fe</p>
-                        <p><strong>📞 Teléfono:</strong> +54 341 690-1109</p>
-                        <p><strong>✉️ Email:</strong> luckbarber@gmail.com</p>
+                        <p><strong>📍 Dirección:</strong> <span id="contactDireccion">Av. Pellegrini 1234, Rosario, Santa Fe</span></p>
+                        <p><strong>📞 Teléfono:</strong> <span id="contactTelefono">+54 341 690-1109</span></p>
+                        <p><strong>✉️ Email:</strong> <span id="contactInfoEmail">luckbarber@gmail.com</span></p>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Galería (solo se muestra si el negocio subió fotos) -->
+    <section class="gallery" id="galeria" style="display: none;">
+        <div class="gallery-container">
+            <h2 class="section-title">Galería</h2>
+            <div class="gallery-grid" id="galleryGrid"></div>
         </div>
     </section>
 
@@ -994,25 +1028,27 @@
             <div class="footer-info">
                 <div class="footer-section">
                     <h4>Ubicación</h4>
-                    <p>Av. Pellegrini 1234<br>Rosario, Santa Fe</p>
+                    <p id="footerDireccion">Av. Pellegrini 1234<br>Rosario, Santa Fe</p>
                 </div>
                 <div class="footer-section">
                     <h4>Contacto</h4>
-                    <p>+54 341 690-1109<br>luckbarber@gmail.com</p>
+                    <p><span id="footerTelefono">+54 341 690-1109</span><br><span id="footerEmail">luckbarber@gmail.com</span></p>
                 </div>
                 <div class="footer-section">
                     <h4>Horarios</h4>
                     <p>Lunes a Viernes: 9:00 - 20:00<br>Sábados: 9:00 - 18:00</p>
                 </div>
             </div>
-            <div class="copyright">
+            <div class="copyright" id="footerCopyright">
                 © 2025 LUCK BARBER - Todos los derechos reservados
             </div>
         </div>
     </footer>
 
+    <script src="/js/negocio-config.js"></script>
     <script>
         const API_URL = window.location.origin;
+        let negocioActual = null;
 
         function mostrarMensaje(texto, tipo) {
             const mensajeDiv = document.getElementById('mensaje');
@@ -1074,17 +1110,26 @@
         const today = new Date().toISOString().split('T')[0];
         fechaInput.min = today;
 
-        // Cargar horarios disponibles
-        fechaInput.addEventListener('change', async function() {
-            const fecha = this.value;
+        // Cargar horarios disponibles (depende de la fecha Y del servicio elegido,
+        // porque la duración de cada servicio determina el tamaño de los slots)
+        const servicioSelect = document.getElementById('servicio');
+
+        async function cargarHorariosDisponibles() {
+            const fecha = fechaInput.value;
+            const servicioId = servicioSelect.value;
             const horaSelect = document.getElementById('hora');
 
             if (!fecha) return;
 
+            if (!servicioId) {
+                horaSelect.innerHTML = '<option value="">Elegí un servicio primero</option>';
+                return;
+            }
+
             try {
                 horaSelect.innerHTML = '<option value="">Cargando horarios...</option>';
 
-                const response = await fetch(`${API_URL}/api/turnos/disponibilidad?fecha=${fecha}`);
+                const response = await fetch(`${API_URL}/api/turnos/disponibilidad?fecha=${fecha}&servicioId=${servicioId}`);
                 const data = await response.json();
 
                 if (data.horariosDisponibles && data.horariosDisponibles.length > 0) {
@@ -1103,6 +1148,11 @@
                 console.error('Error cargando horarios:', error);
                 horaSelect.innerHTML = '<option value="">Error al cargar horarios</option>';
             }
+        }
+
+        fechaInput.addEventListener('change', cargarHorariosDisponibles);
+        servicioSelect.addEventListener('change', function() {
+            if (fechaInput.value) cargarHorariosDisponibles();
         });
 
         // Submit formulario
@@ -1145,7 +1195,8 @@
                         day: 'numeric'
                     });
 
-                    const mensaje = `Hola LUCK BARBER!\n\n` +
+                    const nombreNegocio = negocioActual ? negocioActual.nombre : '';
+                    const mensaje = `Hola ${nombreNegocio}!\n\n` +
                         `Acabo de reservar un turno:\n\n` +
                         `Nombre: ${datos.nombre}\n` +
                         `Servicio: ${turno.nombreServicio}\n` +
@@ -1154,7 +1205,7 @@
                         `Precio: $${turno.precioServicio.toLocaleString()}\n\n` +
                         `Gracias!`;
 
-                    const numeroWhatsApp = '5493416901109';
+                    const numeroWhatsApp = negocioActual ? negocioActual.whatsApp : '';
                     const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
 
                     setTimeout(() => {
@@ -1177,11 +1228,139 @@
             }
         });
 
-        // Cargar servicios al inicio
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', cargarServicios);
-        } else {
+        // Aplicar los datos del negocio (nombre, contacto, mapa, secciones) al DOM
+        function aplicarDatosNegocio(negocio) {
+            document.title = `${negocio.nombre} - Reservá tu turno online`;
+
+            // Logo del header
+            const navLogo = document.getElementById('navLogo');
+            if (navLogo) {
+                if (negocio.logoUrl) {
+                    navLogo.innerHTML = '';
+                    const img = document.createElement('img');
+                    img.src = negocio.logoUrl;
+                    img.alt = negocio.nombre;
+                    img.style.height = '2rem';
+                    img.style.verticalAlign = 'middle';
+                    navLogo.appendChild(img);
+                } else {
+                    navLogo.textContent = `✂️ ${negocio.nombre}`;
+                }
+            }
+
+            // Nosotros: cada párrafo separado por una línea en blanco en la
+            // descripción se muestra como su propio <p>, antes de la frase final fija.
+            const aboutContent = document.getElementById('aboutContent');
+            if (aboutContent && negocio.descripcionNosotros) {
+                aboutContent.querySelectorAll('.about-parrafo').forEach(p => p.remove());
+                const tagline = aboutContent.querySelector('.about-tagline');
+                const parrafos = negocio.descripcionNosotros.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
+                parrafos.forEach(texto => {
+                    const p = document.createElement('p');
+                    p.className = 'about-parrafo';
+                    p.textContent = texto;
+                    aboutContent.insertBefore(p, tagline);
+                });
+            }
+
+            // Hero: si subieron una foto de portada, reemplaza el fondo por defecto
+            const hero = document.querySelector('.hero');
+            if (hero && negocio.heroImagenUrl) {
+                hero.style.backgroundImage =
+                    `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${negocio.heroImagenUrl}')`;
+            }
+
+            // Galería: solo se muestra si el negocio subió al menos una foto
+            const gallerySection = document.getElementById('galeria');
+            const galleryGrid = document.getElementById('galleryGrid');
+            if (gallerySection && galleryGrid) {
+                if (Array.isArray(negocio.galeria) && negocio.galeria.length > 0) {
+                    galleryGrid.innerHTML = '';
+                    negocio.galeria.forEach(foto => {
+                        const img = document.createElement('img');
+                        img.src = foto.url;
+                        img.alt = negocio.nombre;
+                        img.loading = 'lazy';
+                        galleryGrid.appendChild(img);
+                    });
+                    gallerySection.style.display = '';
+                } else {
+                    gallerySection.style.display = 'none';
+                }
+            }
+
+            // Contacto
+            const contactDireccion = document.getElementById('contactDireccion');
+            if (contactDireccion) contactDireccion.textContent = negocio.direccion;
+            const contactTelefono = document.getElementById('contactTelefono');
+            if (contactTelefono) contactTelefono.textContent = negocio.telefono;
+            const contactInfoEmail = document.getElementById('contactInfoEmail');
+            if (contactInfoEmail) contactInfoEmail.textContent = negocio.email;
+
+            // Mapa
+            const mapaIframe = document.getElementById('mapaIframe');
+            if (mapaIframe) {
+                mapaIframe.src = negocio.mapaEmbedUrl
+                    || `https://www.google.com/maps?q=${encodeURIComponent(negocio.direccion)}&output=embed`;
+            }
+
+            // Footer
+            const footerDireccion = document.getElementById('footerDireccion');
+            if (footerDireccion) footerDireccion.textContent = negocio.direccion;
+            const footerTelefono = document.getElementById('footerTelefono');
+            if (footerTelefono) footerTelefono.textContent = negocio.telefono;
+            const footerEmail = document.getElementById('footerEmail');
+            if (footerEmail) footerEmail.textContent = negocio.email;
+            const footerCopyright = document.getElementById('footerCopyright');
+            if (footerCopyright) {
+                footerCopyright.textContent = footerCopyright.textContent.replace('LUCK BARBER', negocio.nombre);
+            }
+
+            // Orden de secciones (servicios / nosotros / contacto)
+            reordenarSecciones(negocio.ordenSecciones);
+        }
+
+        // Reordena los 3 nodos <section> movibles (servicios, nosotros, contacto)
+        // según negocio.ordenSecciones. El header, el footer y la sección
+        // "reservar" (el formulario) nunca se mueven.
+        function reordenarSecciones(ordenSecciones) {
+            const idsMovibles = ['servicios', 'nosotros', 'contacto'];
+            if (!Array.isArray(ordenSecciones)) return;
+
+            const ordenFiltrado = ordenSecciones.filter(id => idsMovibles.includes(id));
+            if (ordenFiltrado.length !== 3) return; // orden incompleto/inválido, no tocar el DOM
+
+            const yaOrdenado = ordenFiltrado.every((id, i) => id === idsMovibles[i]);
+            if (yaOrdenado) return; // ya coincide con el orden actual del HTML
+
+            const nodos = ordenFiltrado.map(id => document.getElementById(id));
+            if (nodos.some(n => !n)) return;
+
+            // "reservar" es el ancla fija: nunca se mueve, y el bloque reordenable
+            // siempre termina ubicado completo justo antes de él (nunca antes que
+            // "reservar" quede desperdigado dentro del bloque, como pasaba al usar
+            // el footer como ancla mientras "reservar" está intercalado en el DOM).
+            const anchor = document.getElementById('reservar');
+            if (!anchor) return;
+            const parent = anchor.parentNode;
+            nodos.forEach(nodo => parent.insertBefore(nodo, anchor));
+        }
+
+        // Inicialización de la página
+        async function inicializar() {
+            try {
+                negocioActual = await cargarConfigNegocio();
+                aplicarDatosNegocio(negocioActual);
+            } catch (error) {
+                console.error('Error cargando configuración del negocio:', error);
+            }
             cargarServicios();
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', inicializar);
+        } else {
+            inicializar();
         }
 
         // Formulario de contacto
@@ -1193,13 +1372,14 @@
             const mensaje = document.getElementById('contactMensaje').value;
 
             // Crear mensaje de WhatsApp
-            const mensajeWhatsApp = `Hola LUCK BARBER!\n\n` +
+            const nombreNegocio = negocioActual ? negocioActual.nombre : '';
+            const mensajeWhatsApp = `Hola ${nombreNegocio}!\n\n` +
                 `Me contacto desde el formulario web:\n\n` +
                 `Nombre: ${nombre}\n` +
                 `Email: ${email}\n\n` +
                 `Mensaje:\n${mensaje}`;
 
-            const numeroWhatsApp = '5493416901109';
+            const numeroWhatsApp = negocioActual ? negocioActual.whatsApp : '';
             const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajeWhatsApp)}`;
 
             // Abrir WhatsApp

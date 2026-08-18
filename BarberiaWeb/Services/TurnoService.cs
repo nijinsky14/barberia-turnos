@@ -8,33 +8,33 @@ namespace BarberiaWeb.Services
     public class TurnoService : ITurnoService
     {
         private readonly BarberiaDbContext _context;
-        private readonly List<string> _horariosDisponibles = new()
-        {
-            "09:00", "10:00", "11:00", "12:00", "13:00", "14:00",
-            "15:00", "16:00", "17:00", "18:00", "19:00"
-        };
+        private readonly INegocioContextService _negocioContext;
 
-        public TurnoService(BarberiaDbContext context)
+        public TurnoService(BarberiaDbContext context, INegocioContextService negocioContext)
         {
             _context = context;
+            _negocioContext = negocioContext;
         }
 
         public async Task<TurnoDto?> CrearTurno(CrearTurnoDto dto)
         {
+            var negocioId = _negocioContext.NegocioActualId;
+
             // Verificar disponibilidad
-            var disponibilidad = await ObtenerDisponibilidad(dto.FechaTurno);
+            var disponibilidad = await ObtenerDisponibilidad(dto.FechaTurno, dto.ServicioId);
             if (!disponibilidad.HorariosDisponibles.Contains(dto.HoraTurno))
             {
                 return null; // El horario está ocupado por un turno Confirmado o Completado
             }
 
             var cliente = await _context.Clientes
-                .FirstOrDefaultAsync(c => c.Telefono == dto.Telefono);
+                .FirstOrDefaultAsync(c => c.NegocioId == negocioId && c.Telefono == dto.Telefono);
 
             if (cliente == null)
             {
                 cliente = new Cliente
                 {
+                    NegocioId = negocioId,
                     Nombre = dto.Nombre,
                     Telefono = dto.Telefono,
                     Email = dto.Email
@@ -45,6 +45,7 @@ namespace BarberiaWeb.Services
 
             var turno = new Turno
             {
+                NegocioId = negocioId,
                 ClienteId = cliente.Id,
                 ServicioId = dto.ServicioId,
                 FechaTurno = dto.FechaTurno.Date,
@@ -64,10 +65,11 @@ namespace BarberiaWeb.Services
 
         public async Task<List<TurnoDto>> ObtenerTurnosPorFecha(DateTime fecha)
         {
+            var negocioId = _negocioContext.NegocioActualId;
             var turnos = await _context.Turnos
                 .Include(t => t.Cliente)
                 .Include(t => t.Servicio)
-                .Where(t => t.FechaTurno.Date == fecha.Date && t.Estado != EstadoTurno.Cancelado)
+                .Where(t => t.NegocioId == negocioId && t.FechaTurno.Date == fecha.Date && t.Estado != EstadoTurno.Cancelado)
                 .OrderBy(t => t.HoraTurno)
                 .ToListAsync();
 
@@ -76,9 +78,11 @@ namespace BarberiaWeb.Services
 
         public async Task<List<TurnoDto>> ObtenerTodosLosTurnos(DateTime? desde = null, DateTime? hasta = null)
         {
+            var negocioId = _negocioContext.NegocioActualId;
             var query = _context.Turnos
                 .Include(t => t.Cliente)
                 .Include(t => t.Servicio)
+                .Where(t => t.NegocioId == negocioId)
                 .AsQueryable();
 
             if (desde.HasValue)
@@ -97,8 +101,10 @@ namespace BarberiaWeb.Services
 
         public async Task<EstadisticasTurnosDto> ObtenerEstadisticas(DateTime? fecha = null)
         {
+            var negocioId = _negocioContext.NegocioActualId;
             var query = _context.Turnos
                 .Include(t => t.Servicio)
+                .Where(t => t.NegocioId == negocioId)
                 .AsQueryable();
 
             if (fecha.HasValue)
@@ -122,24 +128,79 @@ namespace BarberiaWeb.Services
             };
         }
 
-        public async Task<DisponibilidadDto> ObtenerDisponibilidad(DateTime fecha)
+        public async Task<DisponibilidadDto> ObtenerDisponibilidad(DateTime fecha, int servicioId)
         {
-            // Obtener horarios ocupados SOLO por turnos Confirmados o Completados
-            var turnosOcupados = await _context.Turnos
-                .Where(t => t.FechaTurno.Date == fecha.Date && 
+            var negocioId = _negocioContext.NegocioActualId;
+
+            var servicio = await _context.Servicios
+                .FirstOrDefaultAsync(s => s.Id == servicioId && s.NegocioId == negocioId);
+
+            if (servicio == null)
+            {
+                return new DisponibilidadDto { Fecha = fecha.Date, HorariosDisponibles = new List<string>() };
+            }
+
+            var horario = await _context.NegocioHorarios
+                .FirstOrDefaultAsync(h => h.NegocioId == negocioId && h.DiaSemana == fecha.DayOfWeek);
+
+            if (horario == null || !horario.Abierto || horario.HoraApertura == null || horario.HoraCierre == null)
+            {
+                return new DisponibilidadDto { Fecha = fecha.Date, HorariosDisponibles = new List<string>() };
+            }
+
+            var apertura = TimeSpan.Parse(horario.HoraApertura);
+            var cierre = TimeSpan.Parse(horario.HoraCierre);
+
+            // Turnos que ya ocupan un hueco ese día (solo Confirmado/Completado bloquean),
+            // con la duración real de CADA turno (no la del servicio que se está consultando)
+            var turnosDelDia = await _context.Turnos
+                .Include(t => t.Servicio)
+                .Where(t => t.NegocioId == negocioId && t.FechaTurno.Date == fecha.Date &&
                            (t.Estado == EstadoTurno.Confirmado || t.Estado == EstadoTurno.Completado))
-                .Select(t => t.HoraTurno)
                 .ToListAsync();
 
-            var horariosDisponibles = _horariosDisponibles
-                .Where(h => !turnosOcupados.Contains(h))
+            var ocupados = turnosDelDia
+                .Select(t => (Inicio: TimeSpan.Parse(t.HoraTurno), DuracionMinutos: t.Servicio.DuracionMinutos))
                 .ToList();
+
+            var horariosDisponibles = GenerarSlotsDisponibles(apertura, cierre, servicio.DuracionMinutos, ocupados);
 
             return new DisponibilidadDto
             {
                 Fecha = fecha.Date,
                 HorariosDisponibles = horariosDisponibles
             };
+        }
+
+        // Genera los horarios de inicio posibles entre apertura y cierre, en incrementos
+        // de la duración del servicio consultado, descartando los que se solapan con un
+        // turno ya ocupado (considerando la duración real de ESE turno) o que no alcanzan
+        // a terminar antes del cierre.
+        private static List<string> GenerarSlotsDisponibles(TimeSpan apertura, TimeSpan cierre, int duracionMinutos, List<(TimeSpan Inicio, int DuracionMinutos)> ocupados)
+        {
+            var slots = new List<string>();
+            var duracion = TimeSpan.FromMinutes(duracionMinutos);
+            var actual = apertura;
+
+            while (actual + duracion <= cierre)
+            {
+                var finActual = actual + duracion;
+
+                var seSolapa = ocupados.Any(o =>
+                {
+                    var finOcupado = o.Inicio + TimeSpan.FromMinutes(o.DuracionMinutos);
+                    return actual < finOcupado && o.Inicio < finActual;
+                });
+
+                if (!seSolapa)
+                {
+                    slots.Add(actual.ToString(@"hh\:mm"));
+                }
+
+                actual += duracion;
+            }
+
+            return slots;
         }
 
         public async Task<bool> CancelarTurno(int turnoId, string motivo)
