@@ -4,6 +4,7 @@ using BarberiaWeb.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BarberiaWeb.Migrations
 {
     [DbContext(typeof(BarberiaDbContext))]
-    partial class BarberiaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260822181656_AgregarGaleriaAOrdenSecciones")]
+    partial class AgregarGaleriaAOrdenSecciones
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -177,7 +180,7 @@ namespace BarberiaWeb.Migrations
                             Email = "luckbarber@gmail.com",
                             FechaActualizacion = new DateTime(2025, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Nombre = "LUCK BARBER",
-                            OrdenSeccionesJson = "[\"servicios\",\"nosotros\",\"galeria\",\"reservar\",\"contacto\"]",
+                            OrdenSeccionesJson = "[\"servicios\",\"nosotros\",\"galeria\",\"contacto\"]",
                             Rubro = "Barberia",
                             Telefono = "+54 341 690-1109",
                             WhatsApp = "5493416901109"

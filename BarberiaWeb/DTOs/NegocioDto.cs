@@ -70,7 +70,7 @@ namespace BarberiaWeb.DTOs
 
         [StringLength(2000)] public string? DescripcionNosotros { get; set; }
 
-        public List<string> OrdenSecciones { get; set; } = new() { "servicios", "nosotros", "contacto" };
+        public List<string> OrdenSecciones { get; set; } = new() { "servicios", "nosotros", "galeria", "reservar", "contacto" };
 
         public List<HorarioDto> Horarios { get; set; } = new();
     }

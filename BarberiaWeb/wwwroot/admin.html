@@ -1258,6 +1258,8 @@
                 <div class="secciones-orden-grid" id="seccionesOrdenGrid">
                     <div class="seccion-card" data-seccion="servicios">☰ Servicios</div>
                     <div class="seccion-card" data-seccion="nosotros">☰ Nosotros</div>
+                    <div class="seccion-card" data-seccion="galeria">☰ Galería</div>
+                    <div class="seccion-card" data-seccion="reservar">☰ Reservar</div>
                     <div class="seccion-card" data-seccion="contacto">☰ Contacto</div>
                 </div>
             </div>
@@ -1480,7 +1482,7 @@
 
             renderGaleria(negocio.galeria || []);
             renderHorarios(negocio.horarios || []);
-            renderOrdenSecciones(negocio.ordenSecciones || ['servicios', 'nosotros', 'contacto']);
+            renderOrdenSecciones(negocio.ordenSecciones || ['servicios', 'nosotros', 'galeria', 'reservar', 'contacto']);
         }
 
         function actualizarPreviewImagen(elementId, url, textoVacio) {

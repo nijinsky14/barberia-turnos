@@ -65,7 +65,7 @@ namespace BarberiaWeb.Controllers
             negocio.MapaEmbedUrl = dto.MapaEmbedUrl;
             negocio.DescripcionNosotros = dto.DescripcionNosotros;
 
-            var seccionesValidas = new HashSet<string> { "servicios", "nosotros", "contacto" };
+            var seccionesValidas = new HashSet<string> { "servicios", "nosotros", "galeria", "reservar", "contacto" };
             var orden = dto.OrdenSecciones.Where(s => seccionesValidas.Contains(s)).Distinct().ToList();
             foreach (var s in seccionesValidas)
                 if (!orden.Contains(s)) orden.Add(s);

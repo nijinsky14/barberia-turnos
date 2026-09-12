@@ -905,6 +905,14 @@
         </div>
     </section>
 
+    <!-- Galería (solo se muestra si el negocio subió fotos) -->
+    <section class="gallery" id="galeria" style="display: none;">
+        <div class="gallery-container">
+            <h2 class="section-title">Galería</h2>
+            <div class="gallery-grid" id="galleryGrid"></div>
+        </div>
+    </section>
+
     <!-- Formulario de Reserva -->
     <section class="booking" id="reservar">
         <div class="booking-container">
@@ -1011,14 +1019,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Galería (solo se muestra si el negocio subió fotos) -->
-    <section class="gallery" id="galeria" style="display: none;">
-        <div class="gallery-container">
-            <h2 class="section-title">Galería</h2>
-            <div class="gallery-grid" id="galleryGrid"></div>
         </div>
     </section>
 
@@ -1316,19 +1316,19 @@
                 footerCopyright.textContent = footerCopyright.textContent.replace('LUCK BARBER', negocio.nombre);
             }
 
-            // Orden de secciones (servicios / nosotros / contacto)
+            // Orden de secciones (servicios / nosotros / galeria / reservar / contacto)
             reordenarSecciones(negocio.ordenSecciones);
         }
 
-        // Reordena los 3 nodos <section> movibles (servicios, nosotros, contacto)
-        // según negocio.ordenSecciones. El header, el footer y la sección
-        // "reservar" (el formulario) nunca se mueven.
+        // Reordena los 5 nodos <section> movibles (servicios, nosotros, galeria,
+        // reservar, contacto) según negocio.ordenSecciones. Solo el header y el
+        // footer quedan siempre fijos.
         function reordenarSecciones(ordenSecciones) {
-            const idsMovibles = ['servicios', 'nosotros', 'contacto'];
+            const idsMovibles = ['servicios', 'nosotros', 'galeria', 'reservar', 'contacto'];
             if (!Array.isArray(ordenSecciones)) return;
 
             const ordenFiltrado = ordenSecciones.filter(id => idsMovibles.includes(id));
-            if (ordenFiltrado.length !== 3) return; // orden incompleto/inválido, no tocar el DOM
+            if (ordenFiltrado.length !== idsMovibles.length) return; // orden incompleto/inválido, no tocar el DOM
 
             const yaOrdenado = ordenFiltrado.every((id, i) => id === idsMovibles[i]);
             if (yaOrdenado) return; // ya coincide con el orden actual del HTML
@@ -1336,11 +1336,9 @@
             const nodos = ordenFiltrado.map(id => document.getElementById(id));
             if (nodos.some(n => !n)) return;
 
-            // "reservar" es el ancla fija: nunca se mueve, y el bloque reordenable
-            // siempre termina ubicado completo justo antes de él (nunca antes que
-            // "reservar" quede desperdigado dentro del bloque, como pasaba al usar
-            // el footer como ancla mientras "reservar" está intercalado en el DOM).
-            const anchor = document.getElementById('reservar');
+            // El <footer> es el ancla fija: nunca se mueve, y el bloque reordenable
+            // siempre termina ubicado completo justo antes de él.
+            const anchor = document.querySelector('footer');
             if (!anchor) return;
             const parent = anchor.parentNode;
             nodos.forEach(nodo => parent.insertBefore(nodo, anchor));

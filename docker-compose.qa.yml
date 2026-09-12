@@ -1,0 +1,40 @@
+services:
+  qa-sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: barberia-qa-sql
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "${QA_DB_PASSWORD:-BarberiaQA_2026!}"
+    ports:
+      - "1434:1433"
+    volumes:
+      - qa-sql-data:/var/opt/mssql
+    networks:
+      - barberia-qa
+
+  qa-app:
+    build:
+      context: .
+      dockerfile: BarberiaWeb/Dockerfile
+    container_name: barberia-qa-app
+    depends_on:
+      - qa-sql
+    environment:
+      ASPNETCORE_ENVIRONMENT: "QA"
+      ASPNETCORE_URLS: "http://+:8080"
+      ConnectionStrings__DefaultConnection: "Server=qa-sql,1433;Database=BarberiaDB_QA;User Id=sa;Password=${QA_DB_PASSWORD:-BarberiaQA_2026!};TrustServerCertificate=True;MultipleActiveResultSets=true"
+      Admin__Usuario: "admin"
+      Admin__Contrasena: "${QA_ADMIN_PASSWORD:-VkdRi+W795WsnGNGL7WLOl+l}"
+    ports:
+      - "8081:8080"
+    volumes:
+      - qa-uploads:/app/wwwroot/uploads
+    networks:
+      - barberia-qa
+
+networks:
+  barberia-qa:
+
+volumes:
+  qa-sql-data:
+  qa-uploads:

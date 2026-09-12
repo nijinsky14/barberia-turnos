@@ -64,7 +64,7 @@ namespace BarberiaWeb.Models
         public string? DescripcionNosotros { get; set; }
 
         [Column(TypeName = "nvarchar(500)")]
-        public string OrdenSeccionesJson { get; set; } = "[\"servicios\",\"nosotros\",\"contacto\"]";
+        public string OrdenSeccionesJson { get; set; } = "[\"servicios\",\"nosotros\",\"galeria\",\"reservar\",\"contacto\"]";
 
         public DateTime FechaActualizacion { get; set; } = DateTime.Now;
 

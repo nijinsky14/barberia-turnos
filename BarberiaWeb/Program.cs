@@ -64,7 +64,7 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configurar el pipeline HTTP
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "QA")
 {
     app.UseSwagger();
     app.UseSwaggerUI();
@@ -88,6 +88,8 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<BarberiaDbContext>();
+    await context.Database.MigrateAsync();
+
     if (!await context.Usuarios.AnyAsync())
     {
         var negocioContext = scope.ServiceProvider.GetRequiredService<INegocioContextService>();
